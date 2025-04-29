@@ -1,0 +1,1000 @@
+  905  pip run pybricksdev udev | sudo tee /etc/udev/rules.d/99-pybricksdev.rules
+  906  sudo apt install pbrick-rules
+  907  lsusb
+  908  sudo bluetoothctl
+  909  sudo rfcomm bind 0 16:E3:1D:24:E2:09
+  910  ls -l /dev/rfcomm0
+  911  screen /dev/rfcomm0
+  912  lsusb
+  913  sudo dmesg
+  914  pip install pybricks
+  915  sudo dmesg
+  916  sudo rfcomm connect /dev/rfcomm0 09:CD:29:35:58:FC
+  917  sudo rfcomm bind 0 09:CD:29:35:58:FC
+  918  sudo rfcomm connect /dev/rfcomm0 09:CD:29:35:58:FC
+  919  ls -l /dev/rfcomm0
+  920  screen /dev/rfcomm0
+  921  sudo rfcomm bind 0 24:FD:B9:44:FD:F1
+  922  sudo rfcomm release 0
+  923  sudo rfcomm bind 0 3B:46:F1:C2:A2:41
+  924  sudo rfcomm connect /dev/rfcomm0 3B:46:F1:C2:A2:41
+  925  modprobe btusb
+  926  sudo systemctl restart bluetooth
+  927  rfkill list
+  928  hcitool scanhcitool scan
+  929  hcitool scan
+  930  sudo systemctl stop bluetooth
+  931  sudo rfcomm connect hci0 15:14:87:3F:AF:E8
+  932  sudo rfcomm connect hci0 26:A8:C6:CD:95:2F
+  933  hcitool scan
+  934  sudo rfcomm connect /dev/rfcomm0 25:27:DC:31:BA:66
+  935  hciconfig
+  936  sudo bluetoothctl
+  937  rfkill list
+  938  bluetoothd -n -d
+  939  sudo systemctl stop bluetooth
+  940  sudo  bluetoothd -n -d
+  941  bg %1
+  942  lsmod|grep btusb
+  943  sudo bluetoothctl
+  944  kill 51
+  945  kill %1
+  946  sudo systemctl start bluetooth
+  947  bluetoothctl
+  948  exit
+  949  sudo rfkill
+  950  rfkill list
+  951  sudo rfcomm connect hci0 3E:C8:A1:E6:A4:C8 
+  952  hciconfig hci0 up
+  953  sudo hciconfig hci0 up
+  954  sudo rfcomm connect hci0 3E:C8:A1:E6:A4:C8 
+  955  sudo rfcomm connect /dev/rfcomm0 30:6B:B6:C1:C9:82
+  956  sudo dmesg
+  957  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+  958  DOCKER_XAUTHORITY=${XAUTH}.docker
+  959  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+  960  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+  961  export DISPLAY=:0
+  962  xhost +
+  963  udo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+  964  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+  965  sudo apt install calibre
+  966  sudo apt update
+  967  sudo apt upgrade
+  968  sudo apt autoremove
+  969  sudo rfcomm connect /dev/rfcomm0 21:1D:90:B8:C5:FD
+  970  sudo rfcomm connect hci0 21:1D:90:B8:C5:FD
+  971  dmesg
+  972  sudo rfcomm connect /dev/rfcomm0 04:D3:68:84:9D:F5
+  973  hciconfig hci0 up
+  974  sudo hciconfig hci0 up
+  975  sudo rfcomm connect /dev/rfcomm0 04:D3:68:84:9D:F5
+  976  cat /dev/rfcomm0
+  977  sudo rfcomm bind 0 20:03:7C:ED:F5:7A
+  978  ls /dev/rfcomm0
+  979  sudo rfcomm connect /dev/rfcomm0 20:03:7C:ED:F5:7A
+  980  sudo dmesg
+  981  bluetoothctl
+  982  sudo apt update && sudo apt install pybricks-micropyth
+  983  sudo apt update && sudo apt install pybricks-micropython3
+  984  /bin/python3 /home/user01/Documents/milad/testing.py
+  985  farbe_dict_sortiert[0]=='NONE'
+  986  if  farbe_dict_sortiert[0]=='NONE' and farbe_dict[farbe_dict_sortiert[1]>=1]:;     print(farbe_dict_sortiert[1]   ) 
+  987  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+  988  DOCKER_XAUTHORITY=${XAUTH}.docker
+  989  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+  990  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+  991  export DISPLAY=:0
+  992  xhost +
+  993  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+  994  def reflection():
+  995  reflection()
+  996  # Create .Xauthority.docker file with wildcarded hostname.
+  997  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+  998  DOCKER_XAUTHORITY=${XAUTH}.docker
+  999  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1000  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1001  export DISPLAY=:0
+ 1002  xhost +
+ 1003  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1004  deb [arch=amd64 signed-by=/usr/share/keyrings/opera.gpg] https://deb.opera.com/opera-stable/ stable non-free
+ 1005  sudo apt reinstall opera-stable
+ 1006  ifconfig
+ 1007  dmes
+ 1008  dmesg
+ 1009  sudo apt install asyncio
+ 1010  sudo python pip  install asyncio
+ 1011  sudo python -m pip  install asyncio
+ 1012  sudo pip  install asyncio
+ 1013  mes
+ 1014  sudo pip  install asyncio
+ 1015  pip  install asyncio
+ 1016  pip install blessed
+ 1017  pip install platform
+ 1018  sudo pip install platform
+ 1019  sudo pip install bleak
+ 1020  pip install pybricks
+ 1021  sudo pip install pybricks
+ 1022  sudo pip install pybricksdev
+ 1023  pybricksdev run ble --name "mimi" test.py
+ 1024  python test.py
+ 1025  python3 test.py
+ 1026  python test.py
+ 1027  python --version
+ 1028  python3 --version
+ 1029  python test.py
+ 1030  python3 test.py
+ 1031  ls
+ 1032  dir test.py
+ 1033  python3 test
+ 1034  python3 test.py
+ 1035  python3 repl.py
+ 1036  pybricksdev run ble --name "mimi" test.py
+ 1037  git add .
+ 1038  git commit -m 'init'
+ 1039  '/home/user01/Documents/wro/wro_24/dokumente/configuration.md'
+ 1040  git commit -m 'init'
+ 1041  git push
+ 1042  git clone https://github.com/milad-asrar/wro_24.git
+ 1043  git-credential-manager configure
+ 1044  cd
+ 1045  git-credential-manager configure
+ 1046  sudo chmown -R user01:user01 /home/user01
+ 1047  sudo chown -R user01:user01 /home/user01
+ 1048  git-credential-manager configure
+ 1049  cd /home/user01
+ 1050  git-credential-manager configure
+ 1051  ls .gi*
+ 1052  echo "" >>.gitconfig
+ 1053  sudo cat .gitconfig
+ 1054  cat .gitconfig
+ 1055  pwd
+ 1056  cd .gitconfig
+ 1057  ls
+ 1058  cd
+ 1059  mkdir .gitconfig
+ 1060  ls
+ 1061  ls lra
+ 1062  ls -lra
+ 1063  sudo chown -R user01:user01 /home/user01/*
+ 1064  git-credential-manager configure
+ 1065  sudo git-credential-manager configure
+ 1066  cd .ssh
+ 1067  dir
+ 1068  ssh-keygen -t ed25519 -C "asrar.farhad@gmail.com"
+ 1069  ssh-keygen -t ed25519 -C "panther.trader@gmail.com"
+ 1070  sudo ssh-keygen -t ed25519 -C "panther.trader@gmail.com"
+ 1071  ls
+ 1072  cd .ssh
+ 1073  dir
+ 1074  cd .ssh
+ 1075  sudo cd .ssh
+ 1076  ls -lra
+ 1077  ssh-keygen -t ed25519 -C "panther.trader@gmail.com"
+ 1078  chmod chown user01:user01 .ssh
+ 1079  sudo chown user01:user01 .ssh
+ 1080  sudo chown -Ruser01:user01 .ssh
+ 1081  sudo chown -Ruser01:user
+ 1082  sudo chown -R user01:user01 .ssh
+ 1083  mkdir .ss
+ 1084  mkdir .ssh
+ 1085  ls lra
+ 1086  ls -la
+ 1087  cd ..
+ 1088  dir
+ 1089  ls lra
+ 1090  ls -lra
+ 1091  sudo chown -R user01:user01 user01/
+ 1092  ls -lra
+ 1093  cd user01
+ 1094  dir
+ 1095  ls -lra
+ 1096  mkdir .ssh
+ 1097  pwd
+ 1098  mkdir ".ssh"
+ 1099  sudo mkdir ".ssh"
+ 1100  ls -lra
+ 1101  cd .ssh/
+ 1102  cd ..
+ 1103  dir
+ 1104  ls lra
+ 1105  ls -lra
+ 1106  sudo chown -R user01:user01 user01/
+ 1107  sudo chown -R user01:user01 .
+ 1108  ls lra
+ 1109  ls -lra
+ 1110  ssh-keygen -t ed25519 -C "panther.trader@gmail.com"
+ 1111  mkdir test
+ 1112  ls -lra
+ 1113  cd ..
+ 1114  dir
+ 1115  ls -lra
+ 1116  chmod 711
+ 1117  chmod 711 user01/
+ 1118  ls -lra
+ 1119  cat /etc/passwd
+ 1120  dc
+ 1121  cd
+ 1122  mkdir test
+ 1123  rm test
+ 1124  mkdir -rf test
+ 1125  ls l.ra
+ 1126  ls -lra
+ 1127  cd ..
+ 1128  ls lra
+ 1129  ls -lra
+ 1130  cd user01
+ 1131  dir
+ 1132  cd .ssh
+ 1133  dir
+ 1134  ls lra
+ 1135  ls -lra
+ 1136  cat id_ed25519.pub 
+ 1137  ssh -T git@github.com
+ 1138  cd
+ 1139  ls
+ 1140  cd Documents/
+ 1141  dir
+ 1142  ld
+ 1143  cd wro
+ 1144  dir
+ 1145  cd..
+ 1146  cd ..
+ 1147  mkdir source
+ 1148  rm -rf source
+ 1149  cd wro
+ 1150  dir
+ 1151  git clone git@github.com:milad-asrar/wro_24.git
+ 1152  ls .lra
+ 1153  ls -lra
+ 1154  cd /home/user01/Documents/wro/wro_24/source/experiente
+ 1155  pybricksdev run ble --name "mimi" pybriks_testing.py
+ 1156  pybricksdev run ble --name "mimi" pybricks_testing.py
+ 1157  pybricksdev run ble --name "mimi" wro_mimi.py
+ 1158  cd ..
+ 1159  pybricksdev run ble --name "mimi" wro_mimi.py
+ 1160  pybricksdev run ble --name "mimi" wro_main.py
+ 1161  git pull
+ 1162  git push
+ 1163  git pull
+ 1164  echo "options btusb enable_autosuspend=0" | sudo tee /etc/modprobe.d/disable_btusb-autosuspend.conf
+ 1165  reboot
+ 1166  /bin/python3 /home/user01/Documents/wro/wro_24/source/experiente/color_test.py
+ 1167  sudo apt update && sudo apt install wireshark
+ 1168  wireshark
+ 1169  pybricksdev run ble --name "mimi" color_test.py
+ 1170  cd source/experiente/
+ 1171  pybricksdev run ble --name "mimi" color_test.py
+ 1172  cd /home/user01/Documents/wro/wro_24/source/experiente
+ 1173  pybricksdev run ble --name "mimi" color_test.py
+ 1174  pybricksdev run ble --name "mimi" wro_main.py
+ 1175  pybricksdev run ble --name "mimi" wro_main.py
+ 1176  cd /home/user01/Documents/wro/wro_24/source/wro_main.py
+ 1177  pybricksdev run ble --name "mimi" wro_main.py
+ 1178  ls
+ 1179  cd source
+ 1180  dir
+ 1181  pybricksdev run ble --name "mimi" wro_main.py
+ 1182  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1183  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1184  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1185  export DISPLAY=:0
+ 1186  xhost +
+ 1187  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1188  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1189  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1190  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1191  export DISPLAY=:0
+ 1192  xhost +
+ 1193  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1194  cd turtle/
+ 1195  python3
+ 1196  cd turtle/
+ 1197  python3
+ 1198  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1199  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1200  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1201  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1202  export DISPLAY=:0
+ 1203  xhost +
+ 1204  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1205  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1206  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1207  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1208  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1209  export DISPLAY=:0
+ 1210  xhost +
+ 1211  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1212  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1213  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1214  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1215  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1216  export DISPLAY=:0
+ 1217  xhost +
+ 1218  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1219  lsmod | grep ath
+ 1220  # Create .Xauthority.docker file with wildcarded hostname.
+ 1221  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1222  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1223  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1224  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1225  export DISPLAY=:0
+ 1226  xhost +
+ 1227  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1228  # Create .Xauthority.docker file with wildcarded hostname.
+ 1229  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1230  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1231  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1232  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1233  export DISPLAY=:0
+ 1234  xhost +
+ 1235  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1236  sudo apt-get install mtpfs
+ 1237  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1238  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1239  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1240  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1241  export DISPLAY=:0
+ 1242  xhost +
+ 1243  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1244  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1245  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1246  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1247  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1248  export DISPLAY=:0
+ 1249  xhost +
+ 1250  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1251  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1252  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1253  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1254  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1255  export DISPLAY=:0
+ 1256  xhost +
+ 1257  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1258  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1259  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1260  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1261  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1262  export DISPLAY=:0
+ 1263  xhost +
+ 1264  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1265  find / -name "*.pgn"
+ 1266  find / -name "*.pgn" 2&>/dev/null
+ 1267  find / -name "*.pgn" 2>/dev/null
+ 1268  find / -name "*chess*" 2>/dev/null
+ 1269  sudo apt get install nemo
+ 1270  sudo apt install nemo
+ 1271  sudo apt get update
+ 1272  sudo apt update
+ 1273  sudo apt upgrade
+ 1274  sudo apt update
+ 1275  sudo date -s "$(wget --method=HEAD -qSO- --max-redirect=0 google.com 2>&1 | sed -n 's/^ *Date: *//p')"
+ 1276  timedatectl set-ntp true
+ 1277  sudo ntpd -qg; sudo hwclock -w
+ 1278  sudo date +"%d %b %Y %T %Z" -s "$(wget -qSO- --max-redirect=0 http://google.com 2>&1 | grep '^  Date:' | cut -d' ' -f 5-)"
+ 1279  sudo app get sqlitebrowser
+ 1280  sudo apt get sqlitebrowser
+ 1281  sudo apt install sqlitebrowser
+ 1282  sudo apt install mplayer mplayer-gui
+ 1283  sudo apt install mpv
+ 1284  sudu apt install calibre
+ 1285  sudo apt install calibre
+ 1286  sudo apt autoremove
+ 1287  sudo apt install calibre
+ 1288  sudo apt upgrade calibre
+ 1289  sudo apt get update
+ 1290  sudo apt  update
+ 1291  sudo apt  upgrade
+ 1292  sudo apt autoremomve
+ 1293  sudo apt autoclean
+ 1294  sudo apt clean
+ 1295  sudo apt autopurge
+ 1296  sudo apt update
+ 1297  sudo apt install winehq
+ 1298  sudo apt install wine
+ 1299  sudo apt install playonlinzx
+ 1300  sudo apt install playonlinux
+ 1301  pip install seaborn
+ 1302  pip install statsmodels
+ 1303  pip install toolz
+ 1304  pip install yahoo_fin
+ 1305  pip install requests_html
+ 1306  pip install yfinance
+ 1307  pip
+ 1308  pip install lean
+ 1309  lean project-create
+ 1310  lean
+ 1311  leanlean project-create
+ 1312  lean project-create
+ 1313  lean init
+ 1314  whatis lean
+ 1315  lean init
+ 1316  pip install lean
+ 1317  lean init
+ 1318  pip install --upgrade lean
+ 1319  python3 -m pip install --upgrade lean
+ 1320  lean init
+ 1321  docker
+ 1322  docker images ls
+ 1323  docker images ps
+ 1324  docker images list
+ 1325  docker images ls
+ 1326  docker containers ls
+ 1327  docker containers
+ 1328  docker container
+ 1329  docker container ls
+ 1330  lean --version
+ 1331  sudo apt-get install python3-tk
+ 1332  lean init
+ 1333  exit
+ 1334  python3 -m pip install lean
+ 1335  lean --version
+ 1336  lean --help
+ 1337  lean init
+ 1338  lean --help
+ 1339  manl ean
+ 1340  man lean
+ 1341  pip install lean
+ 1342  ls
+ 1343  cd 
+ 1344  mkdir mylean
+ 1345  cd mylean/
+ 1346  lean init
+ 1347  pip remove lean
+ 1348  pip uninstall lean
+ 1349  pip install lean-1.0.210-py3-none-any.whl 
+ 1350  lean
+ 1351  lean --version
+ 1352  pip remove lean
+ 1353  pip uninstall lean
+ 1354  lean
+ 1355  sudo apt remove lean
+ 1356  whereis lean
+ 1357  sudo apt remove lean
+ 1358  rm -rf /home/user01/.elan/
+ 1359  len
+ 1360  lean
+ 1361  pip install lean
+ 1362  lean --help
+ 1363  lean
+ 1364  lean --version
+ 1365  sudo apt remove calibre
+ 1366  sudo apt install  calibre
+ 1367  calibre
+ 1368  pip install --no-binary lxml lxml
+ 1369  sudo apt update
+ 1370  sudo apt upgrade
+ 1371  udo apt autoremove
+ 1372  sudo apt autoremove
+ 1373  calibr
+ 1374  calibre
+ 1375  lean
+ 1376  cd mylean/
+ 1377  ls
+ 1378  lean build
+ 1379  docker pull quantconnect/lean
+ 1380  docker images
+ 1381  docker run -it --help
+ 1382  git clone  https://github.com/QuantConnect/Lean
+ 1383  pip install --no-binary lxml lxm
+ 1384  lean build
+ 1385  /bin/python3 /home/user01/mylean/iron_fly/main.py
+ 1386  lean research "iron_fly"
+ 1387  sudo apt-get update
+ 1388  sudo apt-get install ca-certificates curl gnupg
+ 1389  sudo install -m 0755 -d /etc/apt/keyrings
+ 1390  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+ 1391  sudo chmod a+r /etc/apt/keyrings/docker.asc
+ 1392  cat /etc/os-release 
+ 1393  echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+ 1394    jammy stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+ 1395  sudo apt-get update
+ 1396  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+ 1397  docker 
+ 1398  docker--version
+ 1399  docker --version
+ 1400  lean build
+ 1401  docker images
+ 1402  sudo docker images
+ 1403  lean backtest
+ 1404  lean backtest iron_fly
+ 1405  ls
+ 1406  lean backtest iron_fly
+ 1407  lean pull
+ 1408  lean login
+ 1409  lean pull
+ 1410  lean cloud pull
+ 1411  lean cloud backtest "Clone of 05OvernightAnomaly"
+ 1412  lean cloud backtest "clone of option wheel strategy"
+ 1413  lean research
+ 1414  lean research "200~Dancing Yellow-Green Armadillo"
+ 1415  lean research "Dancing Yellow-Green Armadillo"
+ 1416  lean research "Dancing Yellow-Green Armadillo"&
+ 1417  from QuantConnect.Research import QuantBook
+ 1418  from datetime import timedelta
+ 1419  today =  datetime.today()#.strftime('%Y-%m-%d')
+ 1420  # Create .Xauthority.docker file with wildcarded hostname.
+ 1421  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1422  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1423  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1424  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1425  export DISPLAY=:0
+ 1426  xhost +
+ 1427  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1428  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1429  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1430  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1431  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1432  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1433  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1434  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1435  sudo podman run --rm -ti  -u $(id -u):$(id -g)    chrome bash
+ 1436  sudo podman run --rm -ti    chrome bash
+ 1437  podman
+ 1438  podman info 
+ 1439  podman run --rm -ti  chrome bash
+ 1440  podman run --rm -ti  localhost/chrome bash
+ 1441  sudo podman images ls
+ 1442  sudo podman images ls -a
+ 1443  sudo podman build . -t chrome
+ 1444  cd firefox/
+ 1445  sudo podman build . -t chrome
+ 1446  sudo podman run --rm -ti  localhost/chrome bash
+ 1447  podman run --rm -ti -v /:/home/user01/source  -v $XAUTHORITY:/tmp/.XAuthority -e XAUTHORITY=/tmp/.XAuthority   -v /dev/net/tun:/dev/net/tun --device /dev/snd -v /var/run/dbus:/var/run/dbus --cap-add=NET_ADMIN --ipc=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  --env="QT_X11_NO_MITSHM=1" --device /dev/snd  --userns=keep-id --name py_dev py_dev bash
+ 1448  podman run --rm -ti -v /:/home/user01/source  -v $XAUTHORITY:/tmp/.XAuthority -e XAUTHORITY=/tmp/.XAuthority   -v /dev/net/tun:/dev/net/tun --device /dev/snd -v /var/run/dbus:/var/run/dbus --cap-add=NET_ADMIN --ipc=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  --env="QT_X11_NO_MITSHM=1" --device /dev/snd  --userns=keep-id --name py_dev py_dev bash
+ 1449  sudo podman run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1450  sudo podman build . -t chrome
+ 1451  ls
+ 1452  sudo podman build . -t chrome
+ 1453  sudo docker build . -t chrome
+ 1454  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1455  sudo docker build . -t chrome
+ 1456  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1457  sudo docker build . -t chrome
+ 1458  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1459  sudo docker build . -t chrome
+ 1460  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1461  # Create .Xauthority.docker file with wildcarded hostname.
+ 1462  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1463  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1464  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1465  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1466  export DISPLAY=:0
+ 1467  xhost +
+ 1468  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1469  docker images ls
+ 1470  sudo docker images ls
+ 1471  sudo docker image ls
+ 1472  sudo docker build Dockerfile_working -t chrome
+ 1473  sudo docker build ./Dockerfile_working -t chrome
+ 1474  build --help
+ 1475  docker build --help 
+ 1476  sudo docker build -t chrome Dockerfile_working
+ 1477  sudo docker build -t chrome -f Dockerfile_working
+ 1478  sudo docker build -f Dockerfile_working -t chrome
+ 1479  sudo docker build -f Dockerfile_working -t chrome .
+ 1480  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1481  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1482  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1483  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1484  export DISPLAY=:0
+ 1485  xhost +
+ 1486  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1487  sudo apt update
+ 1488  sudo apt install libc6
+ 1489  sudo apt install ghdl
+ 1490  sudo apt install libc6-dev
+ 1491  sudo apt upgrade
+ 1492  sudo apt-get -y install podman
+ 1493  sudo apt-get -y remove  podman
+ 1494  sudo apt-get -y install podman
+ 1495  sudo apt install glibc-source
+ 1496  ssh 192.168.2.111
+ 1497  ssh 192.168.2.111:5000
+ 1498  ssh 192.168.2.111
+ 1499  # Create .Xauthority.docker file with wildcarded hostname.
+ 1500  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1501  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1502  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1503  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1504  export DISPLAY=:0
+ 1505  xhost +
+ 1506  echo $XDG_RUNTIME_DIR
+ 1507  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1508  docker image ls
+ 1509  docker --version
+ 1510  podman --versin
+ 1511  podman --version
+ 1512  podman image ls
+ 1513  podman container ls
+ 1514  podman container ls -a
+ 1515  podman container ls --help
+ 1516  podman container ls --all
+ 1517  docker container
+ 1518  docker container ls --all
+ 1519  sudo docker container ls --all
+ 1520  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1521  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/consudo docker run --rm -ti    -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bashtainers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1522  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1523  docker image ls
+ 1524  sudo groupadd docker
+ 1525  sudo usermod -aG docker $USER
+ 1526  exit
+ 1527  docker container s
+ 1528  docker container ls
+ 1529  docker image ls
+ 1530  sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+ 1531  sudo chmod g+rwx "$HOME/.docker" -R
+ 1532  docker image ls
+ 1533  sudo ls unix:///var/run/docker.sock
+ 1534  sudo ls /var/run/docker.sock
+ 1535  sudo ls /var/run/docker.sock la
+ 1536  sudo ls /var/run/docker.sock -la
+ 1537  sudo chmod 777 /var/run/docker.sock -la
+ 1538  sudo chmod 777 /var/run/docker.sock
+ 1539  docker image ls
+ 1540  docker image inspect db651bc061a9
+ 1541  hist|grep docker build
+ 1542  history|grep docker build
+ 1543  history|grep docker
+ 1544  ls
+ 1545  cd firefox/
+ 1546  ls
+ 1547  sudo docker build -f Dockerfile_working -t chrome .
+ 1548  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1549  sudo docker build -f Dockerfile_working -t chrome .
+ 1550  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1551  sudo docker build -f Dockerfile_working -t chrome .
+ 1552  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1553  docker history
+ 1554  docker image ls
+ 1555  docker history 4cc5a3cfe2aa
+ 1556  docker image ls
+ 1557  sudo docker build -f Dockerfile_working -t chrome .
+ 1558  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1559  sudo docker build -f Dockerfile_working -t chrome .
+ 1560  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1561  sudo docker build -f Dockerfile_working -t chrome .
+ 1562  docker run -u root chrome
+ 1563  sudo docker build -f Dockerfile_working -t chrome .
+ 1564  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1565  sudo docker build -f Dockerfile_working -t chrome .
+ 1566  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1567  docker image ls
+ 1568  docker container ls
+ 1569  docker run -u root chrome
+ 1570  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1571  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1572  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1573  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1574  export DISPLAY=:0
+ 1575  xhost +
+ 1576  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1577  sudo mv wro/ ~milad/
+ 1578  cd ~
+ 1579  ls
+ 1580  sudo chown milad:milad wro
+ 1581  sudo chown wro milad:milad
+ 1582  sudo chown -R 
+ 1583  sudo chown milad:milad wro
+ 1584  ls
+ 1585  c
+ 1586  cd
+ 1587  ls
+ 1588  sudo mv /tmp/wro/ ~milad/
+ 1589  sudo cp -r ~user01/Desktop/wro/ ~milad/Desktop/
+ 1590  sudo chown milad:milad ./Desktop/wro
+ 1591  sudo chown -R milad:milad ./Desktop/wro
+ 1592  sudo chmod 700 ./Desktop/wro
+ 1593  sudo chmod -R 700 ./Desktop/wro
+ 1594  docker container ls
+ 1595  docker exec -u root -it bf135d6499f4
+ 1596  docker exec -u root -it bf135d6499f4 bash
+ 1597  # Create .Xauthority.docker file with wildcarded hostname.
+ 1598  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1599  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1600  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1601  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1602  export DISPLAY=:0
+ 1603  xhost +
+ 1604  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1605  /bin/python3 /home/user01/Documents/wro/wro_24/dokumente/python_lernen/game_1.py
+ 1606  apt update
+ 1607  sudo apt install -f
+ 1608  apt update
+ 1609  apt install mintupgrade
+ 1610  sudo mintupgrade
+ 1611  apt update
+ 1612  sudo mintupgrade
+ 1613  cat /etc/os-release 
+ 1614  apt update
+ 1615  apt upgrade
+ 1616  sudo apt autoremove
+ 1617  sudo apt upgrade
+ 1618  sudo apt update
+ 1619  sudo apt upgrade
+ 1620  sudo apt install cinnamon-desktop-environment
+ 1621  apt remove mintupgrade
+ 1622  reboot
+ 1623  docker container ls
+ 1624  # Create .Xauthority.docker file with wildcarded hostname.
+ 1625  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1626  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1627  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1628  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1629  export DISPLAY=:0
+ 1630  xhost +
+ 1631  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1632  docker continer ls
+ 1633  docker container ls
+ 1634  exit
+ 1635  sudo apt get update
+ 1636  sudo apt update
+ 1637  sudo apt upgrade
+ 1638  sudo apt update
+ 1639  sudo apt upgrade
+ 1640  sudo apt remove
+ 1641  sudo apt autoremove
+ 1642  sudo apt update
+ 1643  sudo apt upgrade
+ 1644  sudo apt update
+ 1645  sudo apt upgrade
+ 1646  reboot
+ 1647  docker container ls
+ 1648  # Create .Xauthority.docker file with wildcarded hostname.
+ 1649  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1650  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1651  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1652  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1653  export DISPLAY=:0
+ 1654  xhost +
+ 1655  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1656  sudo apt install tuxmath
+ 1657  sudo apt install gcompris
+ 1658  tuxmath
+ 1659  tuxmath 
+ 1660  ux
+ 1661  sudo apt install shutter
+ 1662  shutter
+ 1663  cd /opt
+ 1664  ls
+ 1665  cd
+ 1666  ls
+ 1667  cd jTs
+ 1668  cd Jts/
+ 1669  ls
+ 1670  cd .
+ 1671  cd ..
+ 1672  ls
+ 1673  cd Destop
+ 1674  cd Desktop
+ 1675  convert
+ 1676  cd Desktop
+ 1677  ll
+ 1678  convert sp
+ 1679  convert spielmatte.png spielmatte.gif
+ 1680  sudo apt install imagej2#
+ 1681  sudo apt install imagej2
+ 1682  python3
+ 1683  docker container ls
+ 1684  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1685  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1686  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1687  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1688  export DISPLAY=:0
+ 1689  xhost +
+ 1690  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1691  python3
+ 1692  t.penup() t.clear()
+ 1693  t.setpos(0, 0) 
+ 1694  t.setheading(-0)
+ 1695  phyton3
+ 1696  python3
+ 1697  ps
+ 1698  ps aux
+ 1699  ps aux|grep pythono
+ 1700  ps aux|grep python
+ 1701  ps aux|grep turtle
+ 1702  ps aux|grep python
+ 1703  #!/bin/python3
+ 1704  /bin/python3
+ 1705  import turtle
+ 1706  s = turtle.Screen()
+ 1707  t = turtle
+ 1708  s.bgpic('spielmatte.gif')
+ 1709  /bin/python3
+ 1710  import turtle
+ 1711  s = turtle.Screen()
+ 1712  t = turtle
+ 1713  s.bgpic('spielmatte.gif')
+ 1714  import turtle
+ 1715  s = turtle.Screen()
+ 1716  t = turtle
+ 1717  s.bgpic('spielmatte.gif')
+ 1718  t.shapesize(stretch_wid=10, stretch_len=7)
+ 1719  t.shape("turtle") 
+ 1720  import turtle
+ 1721  s = turtle.Screen()
+ 1722  t = turtle
+ 1723  s.bgpic('spielmatte.gif')
+ 1724  t.shapesize(stretch_wid=10, stretch_len=7)
+ 1725  t.shape("turtle") 
+ 1726  import turtle
+ 1727  s = turtle.Screen()
+ 1728  t = turtle
+ 1729  s.bgpic('spielmatte.gif')
+ 1730  retch_len=7)
+ 1731  t.shap
+ 1732  import turtle
+ 1733  s = turtle.Screen()
+ 1734  t = turtle
+ 1735  s.bgpic('spielmatte.gif')
+ 1736  import turtle
+ 1737  s = turtle.Screen()
+ 1738  t = turtle
+ 1739  s.bgpic('spielmatte.gif')
+ 1740  python3
+ 1741  pwd
+ 1742  pyhton3
+ 1743  python3
+ 1744  pwd
+ 1745  tuxmath
+ 1746  adef init():
+ 1747  def init():
+ 1748  python3
+ 1749  import turtle
+ 1750  #def init():
+ 1751  import turtle
+ 1752  #def init():
+ 1753  s = turtle.Screen()
+ 1754  t = turtle
+ 1755  s.bgpic('spielmatte.gif')
+ 1756  t.shapesize(stretch_wid=10, stretch_len=7)
+ 1757  t.shape("turtle") 
+ 1758  python3
+ 1759  ll
+ 1760  python3 -i wro_turtle_01.py 
+ 1761  sudo apt get update
+ 1762  sudo apt  update
+ 1763  sudo apt  upgrade
+ 1764  sudo apt  update
+ 1765  sudo apt  upgrade
+ 1766  sudo apt autoremove
+ 1767  sudo apt  upgrade
+ 1768  sudo apt autoremove
+ 1769  ll
+ 1770  cat wro_turtle_01.py 
+ 1771  ll
+ 1772  more mission_1.py 
+ 1773  ll
+ 1774  ll *.py
+ 1775  python3 -i wro_turtle_01.py 
+ 1776  ll
+ 1777  ls
+ 1778  ls -l
+ 1779  ls -la
+ 1780  ll
+ 1781  nala
+ 1782  python -i wro_turtle_01.py 
+ 1783  pwd
+ 1784  cd ..
+ 1785  ll
+ 1786  cat - ü+ä-ll
+ 1787  ll
+ 1788  ll *.gif
+ 1789  cd turtle/
+ 1790  ll *.gif
+ 1791  image = Image.open("matte_measures.gif")
+ 1792  convert
+ 1793  ls
+ 1794  cp matte_measures.gif matte_measures_org.gif 
+ 1795  convert -resize 1024x768 matte_measures.gif 
+ 1796  convert -resize 1024x768 matte_measures.gif matte_measures_new.gif
+ 1797  s.bgpic('matte_measures_new.gif')
+ 1798  convert -resize 1024x768 matte_measures.gif matte_measures_new.gif
+ 1799  python3 -i wro_turtle_01.py 
+ 1800  convert -resize 150%  matte_measures.gif matte_measures_new.gif
+ 1801  s.bgpic('matte_measures_new.gif')
+ 1802  import turtle 
+ 1803  s = turtle.Screen()
+ 1804  t = turtle
+ 1805  s.bgpic('matte_measures_new.gif')
+ 1806  s.setup(1219, 587)
+ 1807  s.tracer(1)
+ 1808  t.shapesize(stretch_wid=10, stretch_len=7)
+ 1809  t.shape("turtle") 
+ 1810  s = turtle.Screen()
+ 1811  t = turtle
+ 1812  s.bgpic('matte_measures_new.gif')
+ 1813  s.setup(1219, 587)
+ 1814  s.tracer(1)
+ 1815  t.shapesize(stretch_wid=10, stretch_len=7)
+ 1816  t.shape("turtle") 
+ 1817  python3 - i wro_turtle_01.py
+ 1818  sudo apt update
+ 1819  sudo apt upgrade
+ 1820  sudo apt update
+ 1821  sudo apt upgrade
+ 1822  sudo apt autoremove
+ 1823  reboot
+ 1824  sudo apt upgrade
+ 1825  sudo apt update
+ 1826  sudo apt upgrade
+ 1827  cat /etc/os-release 
+ 1828  apt install mintupgrade
+ 1829  sudo mintupgrade
+ 1830  apt update
+ 1831  apt install mintupgrade
+ 1832  sudo mintupgrade
+ 1833  cat /etc/os-release 
+ 1834  sudo apt delete linux
+ 1835  python3
+ 1836  pip install pygame
+ 1837  pip install time
+ 1838  sudo apt istall virtualbox
+ 1839  sudo ll
+ 1840  /ll
+ 1841  sudo print ll
+ 1842  sudo apt install steam
+ 1843  sudo apt install terminal
+ 1844  sudo apt install ubuntu
+ 1845  sudo apt install tux
+ 1846  sudo apt install imageg
+ 1847  sudo show firmwere
+ 1848  found
+ 1849  sudo apt install steam
+ 1850  sudo apt install visual studio code
+ 1851  sudo python3 -m pip install pandas
+ 1852  sudo python3 -m pip install pandas --break-system-packages
+ 1853  python3 -m pip install pandas --break-system-packages
+ 1854  # Create .Xauthority.docker file with wildcarded hostname.
+ 1855  XAUTH=${XAUTHORITY:-$HOME/.Xauthority}
+ 1856  DOCKER_XAUTHORITY=${XAUTH}.docker
+ 1857  cp --preserve=all $XAUTH $DOCKER_XAUTHORITY
+ 1858  #xauth nlist $DISPLAY | sed -e 's/^..../ffff/' | xauth -f $DOCKER_XAUTHORITY nmerge -
+ 1859  export DISPLAY=:0
+ 1860  xhost +
+ 1861  sudo docker run --rm -ti  -u $(id -u):$(id -g)  -e  XAUTHORITY=${DOCKER_XAUTHORITY} -v /var/run/dbus:/var/run/dbus  --device /dev/snd   --volume /dev/net/tun:/dev/net/tun  -e CREATE_TUN_DEVICE=false --cap-add=NET_ADMIN --ipc=host  -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --env="QT_X11_NO_MITSHM=1" --device /dev/dri  --volume /etc/localtime:/etc/localtime:ro --device /dev/video0   -v /var/lib/containers:/var/lib/containers -v /run/user/1000/pulse/native:/run/user/1000/pulse/native  -e PULSE_SERVER=unix:/run/user/1000/pulse/native --privileged  chrome bash
+ 1862  docker ps
+ 1863  python3
+ 1864  import turtle 
+ 1865  s = turtle.Screen()
+ 1866  t = turtle
+ 1867  s.bgpic('matte_measures_new.gif')
+ 1868  s.setup(1219, 587)
+ 1869  s.tracer(1)
+ 1870  t.shapesize(stretch_wid=10, stretch_len=7)
+ 1871  t.shape("turtle") 
+ 1872  import turtle 
+ 1873  s = turtle.Screen()
+ 1874  t = turtle
+ 1875  s.bgpic('matte_measures_new.gif')
+ 1876  s.setup(1219, 587)
+ 1877  s.tracer(1)
+ 1878  t.shapesize(stretch_wid=10, stretch_len=7)
+ 1879  t.shape("turtle") 
+ 1880  import turtle 
+ 1881  s = turtle.Screen()
+ 1882  t = turtle
+ 1883  s.bgpic('matte_measures_new.gif')
+ 1884  s.setup(1219, 587)
+ 1885  s.tracer(1)
+ 1886  t.shapesize(stretch_wid=10, stretch_len=7)
+ 1887  t.shape("turtle") 
+ 1888  import turtle
+ 1889  import turtle 
+ 1890  s = turtle.Screen()
+ 1891  t = turtle
+ 1892  s.bgpic('matte_measures_new.gif')
+ 1893  s.setup(1219, 587)
+ 1894  s.tracer(1)
+ 1895  t.shapesize(stretch_wid=10, stretch_len=7)
+ 1896  t.shape("turtle") 
+ 1897  python3
+ 1898  hist
+ 1899  history
+ 1900  history|grep python
+ 1901  python3 - i wro_turtle_01.py
+ 1902  ls
+ 1903  python3 - i wro_turtle_01.py
+ 1904  history > my_history.txt

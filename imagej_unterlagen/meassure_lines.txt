@@ -1,0 +1,24 @@
+run("Set Scale...", "distance=590 known=114 unit=cm global");
+ 
+ 
+overlayLineLengths();
+
+function overlayLineLengths() { 
+	setFont("Sanserif", 10);
+	n = roiManager("count");
+	getPixelSize(unit, pxWidth, pxHeight);
+	colors = newArray("red","blue","green","yellow","white");
+	for(i=0; i<n; i++) {
+		roiManager("Select", i);
+		 List.setMeasurements;
+		 getLine(x1, y1, x2, y2, lineWidth);
+		 color = colors[i%4];
+		 Roi.setStrokeWidth(1);
+		 Roi.setStrokeColor(color);
+		 run("Add Selection...");
+		 makeText(d2s(round(List.getValue("Length")), 1)+ " "+unit, (x1+x2)/2, (y1+y2)/2);
+		 Roi.setFillColor("88000000");
+		
+		 run("Add Selection...");
+	}
+} 
