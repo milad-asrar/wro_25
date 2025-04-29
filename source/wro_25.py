@@ -118,7 +118,7 @@ def fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=[Color.RED,Color.WHITE],
 #: 
 def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
                 max_gefahrene_distanz=500, max_v=500, end_ausrichtung=90,   \
-                drive_speed=100, algo_bis_distanz=500, log_level=1): 
+                algo_bis_distanz=500, log_level=1): 
     """ Kann NUR LINKS von der schwarzen Linie fahren, in beiden RICHTUNGEN 
     """
     white_reflection = 62
@@ -145,7 +145,8 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
     # später fahren wir schneller
     slow_v= max_v *0.75
     drive_speed=max_v
-    robot.settings(straight_speed=drive_speed)
+    v,v_agg,t,t_agg = robot.settings()
+    robot.settings(slow_v,slow_v,100,500)
   
     while True:
         aktuelle_farbe = get_farbe_am_boden(log_level=1)  
@@ -173,8 +174,8 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
         correction = Kp * deviation
          #: ab algo_bis_distanz  soll der Roboter geradeaus fahren  
         if robot.distance() - start_distance >=  algo_bis_distanz :
-            turn_rate = heading*-1
-            log(f"\t\tTURNRATE auf {heading=}  gesetzt {correction}" )
+            turn_rate = heading*-1 
+            log(f"\t\tTURNRATE auf {heading=}  gesetzt {correction}",log_level=log_level )
 
         if abs(correction) <= 2:
             correction_unter_threshold_anzahl = correction_unter_threshold_anzahl + 1
@@ -188,26 +189,22 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
             gesehene_boden_farben.append(aktuelle_farbe)
             gesehene_farben_linie=[]
 
-            log(f"folge_linie:\tNeue Farbe gefunden:  {aktuelle_farbe=} / {str(line_cs.hsv())=}  / reflection: {str(line_cs.reflection())} /  {deviation=}, heading: {heading} gesehene {gesehene_boden_farben[-2:]}  {stoppe_bei_farbmuster=}" )  
+            log(f"folge_linie:\tNeue Farbe gefunden:  {aktuelle_farbe=} / {str(line_cs.hsv())=}  / reflection: {str(line_cs.reflection())} /  {deviation=}, heading: {heading} gesehene {gesehene_boden_farben[-2:]}  {stoppe_bei_farbmuster=}",log_level=log_level )  
         
-        if gesehene_boden_farben[-2:] == stoppe_bei_farbmuster: 
-            robot.stop()
-            
-            log(f"\tStoppe Motor FARBMUSTER: {gesehene_boden_farben[-2:]}, {gefahrene_distanz=}")
-            log(f"{is_robot_ausgerichtet}, {schwarze_linie_beruehrt=}, {weisse_linie_beruehrt=}")
-            #:           
+        if gesehene_boden_farben[-2:] == stoppe_bei_farbmuster:  
+            log(f"\tStoppe Motor FARBMUSTER: {gesehene_boden_farben[-2:]}, {gefahrene_distanz=}",log_level=log_level)
+            log(f"\t{is_robot_ausgerichtet}, {schwarze_linie_beruehrt=}, {weisse_linie_beruehrt=}",log_level=log_level) 
+            break 
+        elif  gefahrene_distanz >= max_gefahrene_distanz: 
+            log("\tstoppe Motor (Distanz): {gefahrene_distanz} ",log_level=log_level)
             break
-            return gefahrene_distanz
-        elif  gefahrene_distanz >= max_gefahrene_distanz:
-            robot.stop()
-            log("\tstoppe Motor (Distanz): {gefahrene_distanz} ")
-            return gefahrene_distanz
+           
 
         if aktuelle_farbe in [Color.WHITE, Color.BLACK]: 
             drive_speed = max_v if is_robot_ausgerichtet else max_v*0.75
 
             if correction_unter_threshold_anzahl>5 and is_robot_ausgerichtet is False:
-                robot.stop()
+                robot.stop() 
                 robot.use_gyro(False)
                 hub.imu.reset_heading(0)
                 robot.use_gyro(True)
@@ -222,16 +219,17 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
                 weisse_linie_beruehrt =weisse_linie_beruehrt + 1 
             if aktuelle_farbe in [Color.BLACK]:
                 schwarze_linie_beruehrt =schwarze_linie_beruehrt + 1 
-                black_reflection_aktuell = line_cs.reflection() 
-
+                black_reflection_aktuell = line_cs.reflection()  
         else: 
             if is_robot_ausgerichtet:
-                log(f"\tandere Farberals B/W gefunden, nach is_robot_ausgerichtet {gesehene_boden_farben[-2:]}   {stoppe_bei_farbmuster}")  
+                log(f"\tandere Farberals B/W gefunden, nach is_robot_ausgerichtet {gesehene_boden_farben[-2:]}   {stoppe_bei_farbmuster}",log_level=log_level)  
                 hub.speaker.beep() 
                 robot.stop()
+                log(f"\tw SUCHE WEIßE LINIE",log_level=log_level)
+                
                 break
-            log(f"\tw SUCHE WEIßE LINIE")  
-            robot.stop()
+            log(f"\tw SUCHE WEIßE LINIE",log_level=log_level)  
+            robot.stop()  
             robot.use_gyro(False)
             hub.imu.reset_heading(0)
             robot.use_gyro(True)    
@@ -244,15 +242,19 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
             robot.stop()
             go(100) 
             turn(-1* hub.imu.heading())
+            log(f"\tw SUCHE WEIßE LINIE korregiere auf {-1* hub.imu.heading()}",log_level=log_level)
             # annhame das suchen der w. linie kostet 5cm
             start_distance = robot.distance()
             max_gefahrene_distanz=max_gefahrene_distanz-100 
      
             
         if watch.time()- letzer_durchlauf>1000 :
-            log(f"{is_robot_ausgerichtet=}, {schwarze_linie_beruehrt=}, {weisse_linie_beruehrt=}, {correction=}, {correction_unter_threshold_anzahl=} / {correction_ueber_threshold_anzahl=}") 
+            log(f"{is_robot_ausgerichtet=}, {schwarze_linie_beruehrt=}, {weisse_linie_beruehrt=}, {correction=}, {correction_unter_threshold_anzahl=} / {correction_ueber_threshold_anzahl=}",log_level=log_level) 
             letzer_durchlauf=watch.time()      
         wait(15) # ms 15 
+    robot.stop() 
+    robot.settings( v,v_agg,t,t_agg)
+    return gefahrene_distanz
  
 
  
@@ -370,7 +372,7 @@ def test_proben_farben_2():
     
 
 #hub.speaker.volume(50)
-#folge_linie(stoppe_bei_farbmuster=[Color.WHITE, Color.RED], max_gefahrene_distanz=300,end_ausrichtung=90, debug=True) 
+#folge_linie(stoppe_bei_farbmuster=[Color.WHITE, Color.RED], max_gefahrene_distanz=300,end_ausrichtung=90) 
 def interactive():
     
     user_input_history:list=[]
@@ -417,14 +419,14 @@ def interactive():
             robot.settings(straight_speed=drive_speed)
             get_status()
 
-        if cmd in ['folge_linie','fl','fls']:
+        if cmd in ['folge_linie','fl']:
             robot.reset()
             watch.reset()
             try:
                 distanz = int(parameter)
             except:
-                distanz=600
-            folge_linie( max_gefahrene_distanz=distanz,end_ausrichtung=90, max_v=400) 
+                distanz=300
+            folge_linie( max_gefahrene_distanz=distanz,end_ausrichtung=90, max_v=100, log_level=3) 
             get_status()
             #hub.speaker.beep()
 
@@ -521,7 +523,7 @@ def interactive():
             print("heber nicht stalled")
                 
         if cmd=="settings":
-            v, v_acc, t, t_acc =200,200,50,50
+            v, v_acc, t, t_acc =100,100,100,500
             
             if "," in parameter:
                 v, v_acc, t, t_acc = parameter.split(",")
@@ -557,19 +559,7 @@ def interactive():
             go(50)
             turn (-40)
             
-            """v, v_acc, t, t_acc =300,200,40,40
-            robot.settings(int(v),int(v_acc), int(t),int(t_acc))
-            go(600)
-            folge_linie(stoppe_bei_farbmuster=farb_parameter[farb_muster],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100, debug=True) 
-            robot.settings(int(v),int(v_acc), int(t),int(t_acc))
-            go(70)
-            go(-920)
-            turn(90)
-            go(-100)
-            """
-            
     log(f"{aktuelle_farbe=}, {hsv=}, {reflection=} ",log_level=log_level)
- 
  
 
 #: PROBEN
@@ -670,52 +660,28 @@ def probe_links_liefern(probe_pos):
  
 # interactive()
 
- 
-"""
+  
 
- 'wall', 'fl_s br', 'go 30', 'turn 30', 'go 50', 'turn -30', 'go 30', 'turn -90', 'hist']
-
-# mission linie zu den Proben
-fl_s_wr
-reset_robot
-g 100
-t 90
-go 450
-fb wr
-g 180
-t 90
-g 60
-p
-
-
-# von der linie Proben aufheben
-fl_s br
-g -50
-h2_reset
-h2 -160
-t 10
-go 70
-
-"""
-robot.settings(200,200,200,200)
 def wasserturm():
-    go(30)
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, end_ausrichtung=90,drive_speed=600, debug=2)
-    go(40)
-    turn(-90)
-    folge_linie(stoppe_bei_farbmuster=[Color.GREEN,Color.NONE], max_gefahrene_distanz=330, end_ausrichtung=90,drive_speed=100, debug=2)
-    turn(90)
-    folge_linie(stoppe_bei_farbmuster=[Color.GREEN,Color.NONE], max_gefahrene_distanz=50, end_ausrichtung=90,drive_speed=100, debug=2)
-    turn(-25)
-    go(-70)
-    turn(25)
-    heber.run_angle(100,165)
+    robot.settings(100,100,100,500)
+    go(150)
+    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
+    go(40,then=Stop.COAST_SMART)
+    turn(-90,then=Stop.COAST_SMART)
+    folge_linie(max_gefahrene_distanz=320, end_ausrichtung=90,max_v=200)
+    turn(90,then=Stop.COAST_SMART)
+    go(-100,then=Stop.COAST_SMART)
+    folge_linie(stoppe_bei_farbmuster=[Color.GREEN,Color.NONE], max_gefahrene_distanz=200, max_v=200)
+    turn(-15,then=Stop.COAST_SMART)
+    go(-100,then=Stop.COAST_SMART)
+    turn(15,then=Stop.COAST_SMART)
+    heber.run_angle(100,185)
 
 def hole():
-    robot.settings(1000,(400),200,200)    
-    go(-500)
+    robot.settings(100,(100),200,200)    
+    go(-100)
     go(90)
-    go(-420)
+    go(-120)
     go(150)
 
 
@@ -730,7 +696,9 @@ def lager():
     turn(-90)
 
 def weg():
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=400, end_ausrichtung=90,drive_speed=100, debug=2)
+    go(-40)
+    turn(-90)
+    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, end_ausrichtung=90)
     go(30)
     turn(-90)
     
@@ -744,7 +712,7 @@ def offen():
 def rein():
     heber.run_angle(100,-140)
     go(-50)
-    heber2.run_angle(100,50)
+    heber2.run_angle(100,40)
 
 def drohne():
     go(-100)
@@ -761,12 +729,16 @@ def drohne():
     go(900)
     
 
-# wasserturm()
-hole()
-# weg()
-# lager()
-# offen()
-# rein()
-# drohne()
-# go(100)
-# heber2.run_angle(100,35)
+#: #############################################################################
+
+if __name__ == "__main__":
+    #interactive()
+    wasserturm()
+    hole()
+    weg()
+    # lager()
+    offen()
+    rein()
+    #drohne()
+    # go(100)
+    # heber2.run_angle(100,35)
