@@ -578,7 +578,7 @@ def proben_holen(probe_1_pos=0, probe_2_pos=1):
     heber2_reset()
     farb_muster="br"
     folge_linie(stoppe_bei_farbmuster=farb_parameter[farb_muster],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
-    v, v_acc, t, t_acc =100,100,40,40
+    v, v_acc, t, t_acc =200,200,40,40
     robot.settings(int(v),int(v_acc), int(t),int(t_acc))
     go(probe_1_pos*100)
     turn(25) 
@@ -635,9 +635,31 @@ def zuruck_rechts():
     go(90)
     turn(-90)
     wall()
+
+def probe_links_liefern(probe_pos): 
+    v, v_acc, t, t_acc =200,200,100,100
+    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
+    wall_distanz = 300 +(100*probe_pos)
+    wall(wall_distanz)
+    go(180)
+    turn(-90)
+    v, v_acc, t, t_acc =500,500,100,100
+    robot.settings(int(v),int(v_acc), int(t),int(t_acc))    
+
+    go(500)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rb"],  max_gefahrene_distanz=500, log_level=1)
+    go(40)
+    folge_linie(stoppe_bei_farbmuster=farb_parameter["br"],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
+    go(70)
+    heber2_reset()
+    go(-200)
+    go(0,then=Stop.COAST_SMART)
+
  
 #
-proben_holen(4,5)
+proben_holen(2,4)
+probe_links_liefern(4)
+#zuruck_links()
 # proben_liefern_rechts()
 # zuruck_rechts()
 
