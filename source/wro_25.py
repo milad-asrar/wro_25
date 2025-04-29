@@ -657,8 +657,8 @@ def probe_links_liefern(probe_pos):
 
  
 #
-proben_holen(2,4)
-probe_links_liefern(4)
+# proben_holen(2,4)
+# probe_links_liefern(4)
 #zuruck_links()
 # proben_liefern_rechts()
 # zuruck_rechts()
@@ -668,7 +668,7 @@ probe_links_liefern(4)
 #proben_holen_rechts(0,1)
 #wall(200)
  
-interactive()
+# interactive()
 
  
 """
@@ -712,9 +712,10 @@ def wasserturm():
     heber.run_angle(100,165)
 
 def hole():
-    go(-160)
-    go(80)
-    go(-180)
+    robot.settings(1000,(400),200,200)    
+    go(-500)
+    go(90)
+    go(-420)
     go(150)
 
 
@@ -761,9 +762,9 @@ def drohne():
     
 
 # wasserturm()
-# hole()
+hole()
 # weg()
-# # lager()
+# lager()
 # offen()
 # rein()
 # drohne()
