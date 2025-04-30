@@ -121,14 +121,14 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
                 algo_bis_distanz=500, log_level=1): 
     """ Kann NUR LINKS von der schwarzen Linie fahren, in beiden RICHTUNGEN 
     """
-    white_reflection = 62
+    white_reflection = 50
     black_reflection = 8 
 
     threshold = (white_reflection - black_reflection) / 2 
     gesehene_farben_linie=[Color.NONE,Color.NONE]
     gesehene_boden_farben=[Color.NONE,Color.NONE]
 
-    PROPORTIONAL_GAIN = 0.5 
+ 
     last_color=Color.NONE
     
     start_distance = robot.distance()
@@ -143,6 +143,10 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
 
     # 50 um die Linie sicher zu finden
     # später fahren wir schneller
+    integral = 0
+    last_error = 0
+    Kp, Ki, Kd = 0.65, 0.0002, 1.0
+
     slow_v= max_v *0.75
     drive_speed=max_v
     v,v_agg,t,t_agg = robot.settings()
@@ -151,7 +155,7 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
     while True:
         aktuelle_farbe = get_farbe_am_boden(log_level=1)  
         gesehene_farben_linie.append(aktuelle_farbe)
-        deviation = line_cs.reflection() - threshold 
+        error = line_cs.reflection() - threshold 
 
         try:
             gesehene_farben_linie=gesehene_farben_linie[-3:]
@@ -169,13 +173,15 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
         aktuelle_farbe = farbe_dict_sortiert[0]  
         
         
-        heading = int(hub.imu.heading()) 
-        Kp = 0.5 
-        correction = Kp * deviation
+        heading = int(hub.imu.heading())   
+        integral += error
+        derivative = error - last_error 
+        correction = Kp * error + Ki * integral + Kd * derivative
+        last_error = error
          #: ab algo_bis_distanz  soll der Roboter geradeaus fahren  
         if robot.distance() - start_distance >=  algo_bis_distanz :
             turn_rate = heading*-1 
-            log(f"\t\tTURNRATE auf {heading=}  gesetzt {correction}",log_level=log_level )
+            log(f"\t\tTURNRATE auf {heading=} gesetzt {correction}",log_level=log_level )
 
         if abs(correction) <= 2:
             correction_unter_threshold_anzahl = correction_unter_threshold_anzahl + 1
@@ -189,7 +195,7 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
             gesehene_boden_farben.append(aktuelle_farbe)
             gesehene_farben_linie=[]
 
-            log(f"folge_linie:\tNeue Farbe gefunden:  {aktuelle_farbe=} / {str(line_cs.hsv())=}  / reflection: {str(line_cs.reflection())} /  {deviation=}, heading: {heading} gesehene {gesehene_boden_farben[-2:]}  {stoppe_bei_farbmuster=}",log_level=log_level )  
+            log(f"folge_linie:\tNeue Farbe gefunden:  {aktuelle_farbe=} / {str(line_cs.hsv())=}  / reflection: {str(line_cs.reflection())} /  {error=}, heading: {heading}\n\t\t\tgesehene {gesehene_boden_farben[-2:]}  {stoppe_bei_farbmuster=}",log_level=log_level )  
         
         if gesehene_boden_farben[-2:] == stoppe_bei_farbmuster:  
             log(f"\tStoppe Motor FARBMUSTER: {gesehene_boden_farben[-2:]}, {gefahrene_distanz=}",log_level=log_level)
@@ -233,23 +239,27 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
             robot.use_gyro(False)
             hub.imu.reset_heading(0)
             robot.use_gyro(True)    
-            robot.settings(straight_speed=200)
+            robot.settings(straight_speed=200,turn_acceleration=200)
             aktuelle_farbe=get_farbe_am_boden()
             while  aktuelle_farbe not in [Color.BLACK,Color.WHITE]:
-                robot.drive(int(30),  int(200))
-                wait(10)
+                while  aktuelle_farbe not in [Color.BLACK,Color.WHITE]:
+                    robot.drive(int(40),  int(100))
+                    wait(30)
+                    aktuelle_farbe=get_farbe_am_boden(log_level=log_level)
+                robot.stop() 
+                go(80,then=Stop.NONE)   
+                w_l_turn_rate=hub.imu.heading() *-1
+                log(f"\t SUCHE WEIßE LINIE: auf Weiss/BLack gelandet:  {w_l_turn_rate=}",log_level=log_level)  
+                turn( w_l_turn_rate,then=Stop.BRAKE)
                 aktuelle_farbe=get_farbe_am_boden()
-            robot.stop()
-            go(100) 
-            turn(-1* hub.imu.heading())
-            log(f"\tw SUCHE WEIßE LINIE korregiere auf {-1* hub.imu.heading()}",log_level=log_level)
+            
             # annhame das suchen der w. linie kostet 5cm
             start_distance = robot.distance()
             max_gefahrene_distanz=max_gefahrene_distanz-100 
      
             
         if watch.time()- letzer_durchlauf>1000 :
-            log(f"{is_robot_ausgerichtet=}, {schwarze_linie_beruehrt=}, {weisse_linie_beruehrt=}, {correction=}, {correction_unter_threshold_anzahl=} / {correction_ueber_threshold_anzahl=}",log_level=log_level) 
+            log(f"\t{is_robot_ausgerichtet=}, {schwarze_linie_beruehrt=}, {weisse_linie_beruehrt=}, {correction=}, {correction_unter_threshold_anzahl=} \n\t\t\t\t/ {correction_ueber_threshold_anzahl=}, {gefahrene_distanz=}",log_level=log_level) 
             letzer_durchlauf=watch.time()      
         wait(15) # ms 15 
     robot.stop() 
@@ -732,13 +742,13 @@ def drohne():
 #: #############################################################################
 
 if __name__ == "__main__":
-    #interactive()
-    wasserturm()
-    hole()
-    weg()
+    interactive()
+    #wasserturm()
+    #hole()
+    #weg()
     # lager()
-    offen()
-    rein()
+    #offen()
+    #rein()
     #drohne()
     # go(100)
     # heber2.run_angle(100,35)
