@@ -719,19 +719,31 @@ def rein():
     go(-200)
 
 def drohne():
-    go(-100)
     turn(-90)
-    heber2.run_angle(100,-120)
-    heber.run_angle(100,-15)
-    go(-200)
-    go(30)
+    go(200)
     turn(-90)
-    go(800)
+    wall(700)
+    go(130)
     turn(90)
-    go(850)
+    go(-400)
+    heber.run_angle(100,180)
+    go(-800)
+
+def probe ():
+    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
+    go(40,then=Stop.COAST_SMART)
+    turn(-90,then=Stop.COAST_SMART)
+    # entlang der langen Linie
+    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.NONE], max_gefahrene_distanz=400, max_v=200)
+    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
+    turn(-180)
+    wall(400)
+    turn(-90)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],  max_gefahrene_distanz=500, log_level=1)
+    go(50)
     turn(90)
-    go(900)
-    
+    wall()
+
 
 #: #############################################################################
  
@@ -769,9 +781,11 @@ def proben_aufstellung_lesen(log_level=3):
 
 
 if __name__ == "__main__":
-    wall(100)
-    proben_aufstellung_lesen(log_level=3)
+    # wall(100)
+    # proben_aufstellung_lesen(log_level=3)
     #interactive()
+    # drohne()
+    probe()
     cmd = "wasser"
     cmd="drone"
     if cmd =='wasser':
@@ -788,16 +802,4 @@ if __name__ == "__main__":
     # heber2.run_angle(100,35)
     
     # Drone
-    """
-    
-    #folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED],max_v=100, max_gefahrene_distanz=400)
-    #g 150
-    #t 90
-    #wall 100
-    go 150
-    ss
-    go 10
-    ss
-
-
-    """
+ 
