@@ -829,36 +829,97 @@ def probe_stehe_links(probe_pos_1=0,probe_pos_2=1):
     if probe_pos_1 ==0 and probe_pos_2 == 2:
         go(85)
         robot.arc(155,65)#1-2
-        robot.arc(85,-90)
+        robot.arc(-85,90)
+    if probe_pos_1 ==0 and probe_pos_2 == 3:
+        go(85)
+        robot.arc(155,65)#1-2
+        robot.arc(-165,80)
+    if probe_pos_1 ==1 and probe_pos_2 == 2:
+        go(170)
+        robot.arc(155,65)
+    if probe_pos_1 ==1 and probe_pos_2 == 3:
+        go(170)
+        robot.arc(155,65)#1-2
+        robot.arc(-85,90)
+    if probe_pos_1 ==2 and probe_pos_2 == 3:
+        go(260)
+        robot.arc(155,65)#1-2
+    if probe_pos_1 ==3 and probe_pos_2 == 4:
+        go(360)
+        robot.arc(155,65)#1-2
+    if probe_pos_1 ==4 and probe_pos_2 == 5:
+        go(460)
+        robot.arc(155,65)#1-2
+    
+def probe_stehe_rechts(probe_pos_1=0,probe_pos_2=1):
+    robot.settings(int(100),int(100), int(100),int(100))
+
+    wall()
+    if probe_pos_1 ==0 and probe_pos_2 == 1:
+        go(65)
+        robot.arc(-155,65)#1-2
+    if probe_pos_1 ==0 and probe_pos_2 == 2:
+        go(65)
+        robot.arc(-155,65)#1-2
+        robot.arc(85,90)
+    if probe_pos_1 ==0 and probe_pos_2 == 3:
+        go(65)
+        robot.arc(-155,65)#1-2
+        robot.arc(180,80)
+    if probe_pos_1 ==1 and probe_pos_2 == 2:
+        go(150)
+        robot.arc(-155,65)
+    if probe_pos_1 ==1 and probe_pos_2 == 3:
+        go(150)
+        robot.arc(-155,65)#1-2
+        robot.arc(95,90)
+    if probe_pos_1 ==2 and probe_pos_2 == 3:
+        go(240)
+        robot.arc(-155,65)#1-2
+    if probe_pos_1 ==3 and probe_pos_2 == 4:
+        go(360)
+        robot.arc(-155,65)#1-2
+    if probe_pos_1 ==4 and probe_pos_2 == 5:
+        go(460)
+        robot.arc(-155,65)#1-2
+    if probe_pos_1 ==3 and probe_pos_2 == 5:
+        go(340)
+        robot.arc(-155,65)#1-2
+        robot.arc(95,90)
+
+
+
+
+
 
 
 
 if __name__ == "__main__":
     main_watch=StopWatch()
     start_ts=main_watch.time()   
-    #probe_stehe_links(0,2)
+    probe_stehe_rechts(3,5)
 
    
-    wasser_holen(log_level=1) 
-    #log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
-    proben_lesen(log_level=3)
-    #log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3)
+    # # # wasser_holen(log_level=1) 
+    # # # #log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+    # # # proben_lesen(log_level=3)
+    # # # #log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3)
    
-    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
-    heber2.run_until_stalled(-800, duty_limit=50) 
-    heber.run_until_stalled(-800, duty_limit=50) 
-    robot.settings(500,500,200,200)
-    drohne()
-    rover()
-    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+    # # # log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+    # # # heber2.run_until_stalled(-800, duty_limit=50) 
+    # # # heber.run_until_stalled(-800, duty_limit=50) 
+    # # # robot.settings(500,500,200,200)
+    # # # drohne()
+    # # # rover()
+    # # # log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
 
-    # ver()
-    # probe() 
+    # # # # ver()
+    # # # # probe() 
      
 
-    interactive()
+    # # # interactive()
 
-    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+    # # # log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
 
     
 
