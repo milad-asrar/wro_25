@@ -480,29 +480,32 @@ def fahre_zum_wasserturm():
     folge_linie(max_gefahrene_distanz=320, max_v=200) 
     turn(90,then=Stop.COAST_SMART)
     #wallen
-    robot.settings(300,300,150,150)
+    robot.settings(200,200,150,150)
     go(-200,then=Stop.COAST_SMART) 
     folge_linie(max_gefahrene_distanz=150, max_v=200)
     heber.run_until_stalled(200, duty_limit=50)
 
     # hole die beiden Bälle
     go(-100,then=Stop.COAST_SMART)
+    
+    robot.settings(500,900,100,100)
 
-    go(50,then=Stop.NONE) 
-    go(-50,then=Stop.NONE)
-    go(100,then=Stop.NONE)
-    heber.run_angle(50,-25)
+    go(50,then=Stop.COAST_SMART) 
+    go(-70,then=Stop.COAST_SMART)
+    robot.settings(200,200,100,100)
+    go(100,then=Stop.COAST_SMART)
+    heber.run_angle(50,-25,wait=False)
  
 
 def fahre_vom_wasserturm_zum_lager(): 
-    robot.settings(100,100,100,100)
+    robot.settings(200,200,150,100)
     turn(-90,Stop.BRAKE)
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED],max_v=100, max_gefahrene_distanz=400)
+    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED],max_v=200, max_gefahrene_distanz=400)
     go(30)
     turn(-90)
     # öffnen des lagers
     go(-40)
-    heber2.run_angle(100,165)
+    heber2.run_angle(300,165)
     go(60)
     heber2.run_angle(70,-60)
     go(80)
@@ -518,6 +521,7 @@ def rein():
 
 
 def drohne():
+    robot.settings(500,500,300,300)
     heber.run_until_stalled(-400)
     turn(-90)
     go(200)
@@ -534,26 +538,8 @@ def drohne():
     
   
 
-def ver ():
-    robot.curve(-100,-180)
-    wall(300)
-    go(80)
-    go(-1000)
 
-def probe ():
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
-    go(40,then=Stop.COAST_SMART)
-    turn(-90,then=Stop.COAST_SMART)
-    # entlang der langen Linie
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.NONE], max_gefahrene_distanz=400, max_v=200)
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
-    turn(-180)
-    wall(400)
-    turn(-90)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],  max_gefahrene_distanz=500, log_level=1)
-    go(200)
-    turn(90)
-    wall(300)
+
 
 
 #: #############################################################################
@@ -580,22 +566,7 @@ def proben_aufstellung_lesen(log_level=3):
     log(f"proben_aufstellung_lesen(: {proben_pos} {len(proben_pos)}\n",log_level)
 
 
-    # go(150)
-    # berechnete_farbe=side_farbe(log_level)
-    # proben_pos.append(berechnete_farbe)
     
-    # for i in range(5):
-    #     go(100)
-    #     berechnete_farbe=side_farbe(log_level)
-    #     proben_pos.append(berechnete_farbe)
-        
-    # log(f"proben_aufstellung_lesen(: {proben_pos}",log_level)
-    # return proben_pos
-
-
-
-#hub.speaker.volume(50)
-#folge_linie(stoppe_bei_farbmuster=[Color.WHITE, Color.RED], max_gefahrene_distanz=300,end_ausrichtung=90) 
 def interactive():
     
     user_input_history:list=[]
@@ -809,8 +780,9 @@ def interactive():
 def proben_lesen(log_level=3):
     """
         steht vor dem Wasserlager auf der w. Linie
-
     """ 
+    v, v_acc, t, t_acc =300,300,100,100
+    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
     turn(-90)
     wall(200)
     go(50)
@@ -846,32 +818,48 @@ def rover():
     heber.run_angle(200,170)
     turn(45,then=Stop.COAST_SMART)
 
+
+def probe_stehe_links(probe_pos_1=0,probe_pos_2=1):
+    robot.settings(int(100),int(100), int(100),int(100))
+
+    wall()
+    if probe_pos_1 ==0 and probe_pos_2 == 1:
+        go(85)
+        robot.arc(155,65)#1-2
+    if probe_pos_1 ==0 and probe_pos_2 == 2:
+        go(85)
+        robot.arc(155,65)#1-2
+        robot.arc(85,-90)
+
+
+
 if __name__ == "__main__":
     main_watch=StopWatch()
-    start_ts=main_watch.time()  
-    
-    fahre_zum_wasserturm()
-    #wasser_holen(log_level=1)
+    start_ts=main_watch.time()   
+    #probe_stehe_links(0,2)
+
+   
+    wasser_holen(log_level=1) 
+    #log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+    proben_lesen(log_level=3)
+    #log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3)
+   
     log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
-    #proben_lesen(log_level=3)
+    heber2.run_until_stalled(-800, duty_limit=50) 
+    heber.run_until_stalled(-800, duty_limit=50) 
+    robot.settings(500,500,200,200)
+    drohne()
+    rover()
+    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
 
     # ver()
     # probe() 
-    
-    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
-    #heber2.run_until_stalled(-800, duty_limit=50) 
-    #heber.run_until_stalled(-800, duty_limit=50)
-    
-    #drohne()
-    #rover()
-    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+     
 
-
-    #interactive()
+    interactive()
 
     log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
-    # go(100)
-    # heber2.run_angle(100,35)
+
     
 
    
