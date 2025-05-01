@@ -897,7 +897,26 @@ def probe_stehe_rechts(probe_pos_1=0,probe_pos_2=1):
 if __name__ == "__main__":
     main_watch=StopWatch()
     start_ts=main_watch.time()   
-    probe_stehe_rechts(3,5)
+    heber2.run_until_stalled(-800, duty_limit=50) 
+    probe_stehe_links(3,4) 
+    heber2.run_angle(200,140)
+    v, v_acc, t, t_acc =300,300,100,100
+    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
+    go(100*-3+10)
+    heading_korrektur = 90 - hub.imu.heading()
+    turn(heading_korrektur)
+    go(-800)
+    turn(-90)
+    wall(200)
+    go(160)
+    turn(-90)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["br"],max_gefahrene_distanz=500, log_level=3)
+    go(70)
+    heber2.run_until_stalled(-400,duty_limit=50)
+    go(-200)
+    
+
+    interactive()
 
    
     # # # wasser_holen(log_level=1) 
@@ -911,7 +930,11 @@ if __name__ == "__main__":
     # # # robot.settings(500,500,200,200)
     # # # drohne()
     # # # rover()
+    # # # log(f"vergangene Zeit: { main_watch.time(
     # # # log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+    # # # heber2.run_until_stalled(-800, duty_limit=50) 
+    # # # heber.run_until_stalled(-800, duty_limit=50) 
+    # # # robot.settings(500,500)-start_ts}",log_level=3) 
 
     # # # # ver()
     # # # # probe() 
