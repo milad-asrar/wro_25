@@ -11,21 +11,17 @@ left = Motor(Port.A, Direction.COUNTERCLOCKWISE)
 right = Motor(Port.B)
 heber = Motor(Port.E)
 heber2 = Motor(Port.C)
-robot = DriveBase(left, right, wheel_diameter=88, axle_track=160) #276
+robot = DriveBase(left, right, wheel_diameter=88, axle_track=160)
 robot.use_gyro(True) 
  
 
 turn=robot.turn 
 go=robot.straight
 drive_speed = 400
-#go(-200)
 side_cs = ColorSensor(Port.F)
-
-
 line_cs = ColorSensor(Port.D)
 line_cs.color(surface=True)
  
-
 
 farb_parameter:dict={"rw":[Color.RED,Color.WHITE]
                 ,'wr':[Color.WHITE, Color.RED]
@@ -84,7 +80,7 @@ def get_farbe_am_boden(log_level=1):
  
 #:
 def fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=[Color.RED,Color.WHITE], 
-                            max_gefahrene_distanz=100, log_level=1):
+                            max_gefahrene_distanz=300, log_level=1):
     #
     #
     gesehene_boden_farben=[Color.NONE,Color.NONE]
@@ -368,6 +364,236 @@ def test_proben_farben():
 
     
 
+
+#: PROBEN
+def proben_holen(probe_1_pos=0, probe_2_pos=1):
+    # proben holen
+    heber2_reset()
+    farb_muster="br"
+    folge_linie(stoppe_bei_farbmuster=farb_parameter[farb_muster],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
+    v, v_acc, t, t_acc =200,200,40,40
+    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
+    go(probe_1_pos*100)
+    turn(25) 
+    go(50) 
+    turn(-25)
+    go(50)
+    go((probe_2_pos-probe_1_pos-1)*100)
+    turn (-40)
+    go(50) 
+    heber2.run_angle(200,130)
+    turn(40)
+    # steht am ende der letzten abgeholten Probe
+    
+def wall(distanz=200): 
+    go(distanz*-1,then=Stop.BRAKE)
+    robot.use_gyro(False)
+    robot.reset()
+    robot.use_gyro(True)
+
+
+def proben_liefern_rechts():
+    v, v_acc, t, t_acc =400,400,100,100
+    robot.settings(int(v),int(v_acc), int(t),int(t_acc))  
+    turn(-90)
+    go(400,then=Stop.COAST_SMART)
+    turn(-90)
+    wall(600)
+    go(210)
+    turn(90)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rb"],  max_gefahrene_distanz=200, log_level=1)
+    go(40)
+    folge_linie(stoppe_bei_farbmuster=farb_parameter["br"],max_v=500, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100,log_level=3) 
+    go(70)
+    heber2_reset()
+    go(-200)
+    go(0,then=Stop)
+  
+def zuruck_links():
+    go(-300)
+    turn(-90)
+    wall()
+    go(50)
+    turn(90)
+    folge_linie(stoppe_bei_farbmuster=farb_parameter["rw"],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
+    go(60)
+    turn(-90)
+
+
+def zuruck_rechts():
+    go(-400)
+    turn(90)
+    wall(1000)
+    go(100)
+    turn(90)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rw"],  max_gefahrene_distanz=500, log_level=1)
+    go(90)
+    turn(-90)
+    wall()
+
+def probe_links_liefern(probe_pos): 
+    v, v_acc, t, t_acc =200,200,100,100
+    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
+    wall_distanz = 300 +(100*probe_pos)
+    wall(wall_distanz)
+    go(180)
+    turn(-90)
+    v, v_acc, t, t_acc =500,500,100,100
+    robot.settings(int(v),int(v_acc), int(t),int(t_acc))    
+
+    go(500)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rb"],  max_gefahrene_distanz=500, log_level=1)
+    go(40)
+    folge_linie(stoppe_bei_farbmuster=farb_parameter["br"],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
+    go(70)
+    heber2_reset()
+    go(-200)
+    go(0,then=Stop.COAST_SMART)
+
+ 
+#
+# proben_holen(2,4)
+# probe_links_liefern(4)
+#zuruck_links()
+# proben_liefern_rechts()
+# zuruck_rechts()
+
+# zuruck_links()
+# proben_liefern_rechts()
+#proben_holen_rechts(0,1)
+#wall(200)
+ 
+# interactive()
+
+  
+
+def fahre_zum_wasserturm():
+    #steht am Start
+    robot.settings(300,300,200,500)
+    #go(150)
+    #folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
+    #go(40,then=Stop.COAST_SMART)
+    go(320)
+    turn(-90,then=Stop.COAST_SMART)
+    # entlang der langen Linie
+    robot.settings(200,200,150,150)
+    folge_linie(max_gefahrene_distanz=320, max_v=200) 
+    turn(90,then=Stop.COAST_SMART)
+    #wallen
+    robot.settings(300,300,150,150)
+    go(-200,then=Stop.COAST_SMART) 
+    folge_linie(max_gefahrene_distanz=150, max_v=200)
+    heber.run_until_stalled(200, duty_limit=50)
+
+    # hole die beiden Bälle
+    go(-100,then=Stop.COAST_SMART)
+
+    go(50,then=Stop.NONE) 
+    go(-50,then=Stop.NONE)
+    go(100,then=Stop.NONE)
+    heber.run_angle(50,-25)
+ 
+
+def fahre_vom_wasserturm_zum_lager(): 
+    robot.settings(100,100,100,100)
+    turn(-90,Stop.BRAKE)
+    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED],max_v=100, max_gefahrene_distanz=400)
+    go(30)
+    turn(-90)
+    # öffnen des lagers
+    go(-40)
+    heber2.run_angle(100,165)
+    go(60)
+    heber2.run_angle(70,-60)
+    go(80)
+    heber2.run_angle(100,-20) 
+ 
+
+def rein():
+    heber.run_angle(100,-140)
+    go(-50)
+    heber2.run_angle(100,55)
+    go(-200)
+
+
+
+def drohne():
+    heber.run_until_stalled(-400)
+    turn(-90)
+    go(200)
+    turn(-90)
+    wall(500)
+    go(130)
+    turn(90)
+    heber.run_angle(150,200,wait=False)
+    go(-1150,then=Stop.COAST_SMART)
+    heber.run_until_stalled(-400)
+    go(50,then=Stop.COAST_SMART)
+    
+    
+    
+  
+
+def ver ():
+    robot.curve(-100,-180)
+    wall(300)
+    go(80)
+    go(-1000)
+
+def probe ():
+    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
+    go(40,then=Stop.COAST_SMART)
+    turn(-90,then=Stop.COAST_SMART)
+    # entlang der langen Linie
+    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.NONE], max_gefahrene_distanz=400, max_v=200)
+    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
+    turn(-180)
+    wall(400)
+    turn(-90)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],  max_gefahrene_distanz=500, log_level=1)
+    go(200)
+    turn(90)
+    wall(300)
+
+
+#: #############################################################################
+ 
+
+def proben_aufstellung_lesen(log_level=3):
+    """
+        robot steht gewallt
+    """
+    robot.settings(100,100,100,100)
+    proben_pos:list=[]
+    distanz=0
+    while distanz<650:
+        robot.drive(200,0)
+        distanz = robot.distance()
+        if distanz<120:
+            wait(30)
+            continue 
+        berechnete_farbe, reflektion=side_farbe(log_level)
+        proben_pos.append({berechnete_farbe:distanz}) 
+        wait(30)
+    robot.stop()
+
+    log(f"proben_aufstellung_lesen(: {proben_pos} {len(proben_pos)}\n",log_level)
+
+
+    # go(150)
+    # berechnete_farbe=side_farbe(log_level)
+    # proben_pos.append(berechnete_farbe)
+    
+    # for i in range(5):
+    #     go(100)
+    #     berechnete_farbe=side_farbe(log_level)
+    #     proben_pos.append(berechnete_farbe)
+        
+    # log(f"proben_aufstellung_lesen(: {proben_pos}",log_level)
+    # return proben_pos
+
+
+
 #hub.speaker.volume(50)
 #folge_linie(stoppe_bei_farbmuster=[Color.WHITE, Color.RED], max_gefahrene_distanz=300,end_ausrichtung=90) 
 def interactive():
@@ -547,6 +773,15 @@ def interactive():
         if cmd=='ss':
             berechnete_farbe,probe_reflektion=side_farbe(log_level=3)
 
+        if cmd=="proben_lesen":
+
+            fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3)
+            v, v_acc, t, t_acc =100,100,40,40
+            robot.settings(int(v),int(v_acc), int(t),int(t_acc))
+            go(180)
+            turn(90)
+            wall(100)
+            proben_aufstellung_lesen(log_level=3)
         if cmd=='p':
             test_proben_farben()
 
@@ -569,237 +804,77 @@ def interactive():
             right.run_angle(100,grad)
             
     log(f"{aktuelle_farbe=}, {hsv=}, {reflection=} ",log_level=log_level)
- 
+#:
 
-#: PROBEN
-def proben_holen(probe_1_pos=0, probe_2_pos=1):
-    # proben holen
-    heber2_reset()
-    farb_muster="br"
-    folge_linie(stoppe_bei_farbmuster=farb_parameter[farb_muster],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
-    v, v_acc, t, t_acc =200,200,40,40
-    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
-    go(probe_1_pos*100)
-    turn(25) 
-    go(50) 
-    turn(-25)
+def proben_lesen(log_level=3):
+    """
+        steht vor dem Wasserlager auf der w. Linie
+
+    """ 
+    turn(-90)
+    wall(200)
     go(50)
-    go((probe_2_pos-probe_1_pos-1)*100)
-    turn (-40)
-    go(50) 
-    heber2.run_angle(200,130)
-    turn(40)
-    # steht am ende der letzten abgeholten Probe
-    
-def wall(distanz=200): 
-    go(distanz*-1,then=Stop.BRAKE)
-    robot.use_gyro(False)
-    robot.reset()
-    robot.use_gyro(True)
-
-
-def proben_liefern_rechts():
-    v, v_acc, t, t_acc =400,400,100,100
-    robot.settings(int(v),int(v_acc), int(t),int(t_acc))  
-    turn(-90)
-    go(400,then=Stop.COAST_SMART)
-    turn(-90)
-    wall(600)
-    go(210)
-    turn(90)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rb"],  max_gefahrene_distanz=200, log_level=1)
-    go(40)
-    folge_linie(stoppe_bei_farbmuster=farb_parameter["br"],max_v=500, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100,log_level=3) 
-    go(70)
-    heber2_reset()
-    go(-200)
-    go(0,then=Stop)
-  
-def zuruck_links():
-    go(-300)
-    turn(-90)
-    wall()
-    go(50)
-    turn(90)
-    folge_linie(stoppe_bei_farbmuster=farb_parameter["rw"],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
-    go(60)
-    turn(-90)
-
-
-def zuruck_rechts():
-    go(-400)
-    turn(90)
-    wall(1000)
-    go(100)
-    turn(90)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rw"],  max_gefahrene_distanz=500, log_level=1)
-    go(90)
-    turn(-90)
-    wall()
-
-def probe_links_liefern(probe_pos): 
+    turn(-90) 
+    go(300)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3)
     v, v_acc, t, t_acc =200,200,100,100
     robot.settings(int(v),int(v_acc), int(t),int(t_acc))
-    wall_distanz = 300 +(100*probe_pos)
-    wall(wall_distanz)
     go(180)
-    turn(-90)
-    v, v_acc, t, t_acc =500,500,100,100
-    robot.settings(int(v),int(v_acc), int(t),int(t_acc))    
-
-    go(500)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rb"],  max_gefahrene_distanz=500, log_level=1)
-    go(40)
-    folge_linie(stoppe_bei_farbmuster=farb_parameter["br"],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
-    go(70)
-    heber2_reset()
-    go(-200)
-    go(0,then=Stop.COAST_SMART)
-
- 
-#
-# proben_holen(2,4)
-# probe_links_liefern(4)
-#zuruck_links()
-# proben_liefern_rechts()
-# zuruck_rechts()
-
-# zuruck_links()
-# proben_liefern_rechts()
-#proben_holen_rechts(0,1)
-#wall(200)
- 
-# interactive()
-
-  
-
-def fahre_zum_wasserturm():
-    #steht am Start
-    robot.settings(100,100,100,500)
-    go(150)
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
-    go(40,then=Stop.COAST_SMART)
-    turn(-90,then=Stop.COAST_SMART)
-    # entlang der langen Linie
-    folge_linie(max_gefahrene_distanz=320, max_v=200) 
-    turn(90,then=Stop.COAST_SMART)
-    #wallen
-    go(-200,then=Stop.COAST_SMART) 
-    folge_linie(max_gefahrene_distanz=150, max_v=200)
-    heber.run_until_stalled(200, duty_limit=50)  
-    # hole die beiden Bälle
-    go(-100,then=Stop.COAST_SMART)
-
-    go(80,then=Stop.COAST_SMART)
-    
-    go(-90,then=Stop.COAST_SMART)
-    go(100,then=Stop.COAST_SMART)
-    heber.run_angle(50,-25)
- 
-
-def fahre_vom_wasserturm_zum_lager(): 
-    robot.settings(100,100,100,100)
-    turn(-90,Stop.BRAKE)
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED],max_v=100, max_gefahrene_distanz=400)
-    go(30)
-    turn(-90)
-    # öffnen des lagers
-    go(-40)
-    heber2.run_angle(100,165)
-    go(60)
-    heber2.run_angle(70,-60)
-    go(80)
-    heber2.run_angle(100,-20) 
- 
-
-def rein():
-    heber.run_angle(100,-140)
-    go(-50)
-    heber2.run_angle(100,55)
-    go(-200)
-
-def drohne():
-    turn(-90)
-    go(200)
-    turn(-90)
-    wall(700)
-    go(130)
     turn(90)
-    go(-400)
-    heber.run_angle(100,180)
-    go(-800)
+    wall(100)
+    proben_aufstellung_lesen(log_level=3)
 
-def probe ():
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
-    go(40,then=Stop.COAST_SMART)
-    turn(-90,then=Stop.COAST_SMART)
-    # entlang der langen Linie
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.NONE], max_gefahrene_distanz=400, max_v=200)
-    folge_linie(stoppe_bei_farbmuster=[Color.WHITE,Color.RED], max_gefahrene_distanz=200, max_v=200)
-    turn(-180)
-    wall(400)
-    turn(-90)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],  max_gefahrene_distanz=500, log_level=1)
-    go(50)
-    turn(90)
-    wall()
-
-
-#: #############################################################################
- 
-
-def proben_aufstellung_lesen(log_level=3):
-    robot.settings(100,100,100,100)
-    proben_pos:list=[]
-    robot.reset()
-    distanz=0
-    while distanz<600:
-        robot.drive(300,0)
-        distanz = robot.distance()
-        if distanz<120:
-            wait(30)
-            continue 
-        berechnete_farbe, reflektion=side_farbe(log_level)
-        proben_pos.append({berechnete_farbe:distanz}) 
-        wait(30)
-    robot.stop()
-
-    log(f"proben_aufstellung_lesen(: {proben_pos} {len(proben_pos)}\n",log_level)
-
-
-    # go(150)
-    # berechnete_farbe=side_farbe(log_level)
-    # proben_pos.append(berechnete_farbe)
-    
-    # for i in range(5):
-    #     go(100)
-    #     berechnete_farbe=side_farbe(log_level)
-    #     proben_pos.append(berechnete_farbe)
-        
-    # log(f"proben_aufstellung_lesen(: {proben_pos}",log_level)
-    # return proben_pos
-
-
-if __name__ == "__main__":
-    # wall(100)
-    # proben_aufstellung_lesen(log_level=3)
-    #interactive()
-    # drohne()
-    probe()
-    cmd = "wasser"
-    cmd="drone"
-    if cmd =='wasser':
-        heber2.run_until_stalled(-800, duty_limit=50) 
-        heber.run_until_stalled(-800, duty_limit=50)
-    
-        fahre_zum_wasserturm() 
-        fahre_vom_wasserturm_zum_lager() 
-        rein()
+def wasser_holen(log_level=1):
     heber2.run_until_stalled(-800, duty_limit=50) 
     heber.run_until_stalled(-800, duty_limit=50)
+
+    fahre_zum_wasserturm() 
+    fahre_vom_wasserturm_zum_lager() 
+    rein()
+
+def rover():
+    """
+        drohne abgeliefert und steht vor der weiß-schwarzen Linie
+    """
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3)
+    go(240)
+    turn(-90)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3)
+    heber.run_until_stalled(-400,duty_limit=50)
+    go(200)
+    turn(-50)
+    heber.run_angle(200,170)
+    turn(45,then=Stop.COAST_SMART)
+
+if __name__ == "__main__":
+    main_watch=StopWatch()
+    start_ts=main_watch.time()  
+    
+    fahre_zum_wasserturm()
+    #wasser_holen(log_level=1)
+    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+    #proben_lesen(log_level=3)
+
+    # ver()
+    # probe() 
+    
+    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+    #heber2.run_until_stalled(-800, duty_limit=50) 
+    #heber.run_until_stalled(-800, duty_limit=50)
+    
     #drohne()
+    #rover()
+    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+
+
+    #interactive()
+
+    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
     # go(100)
     # heber2.run_angle(100,35)
     
-    # Drone
- 
+
+   
+
+
+
