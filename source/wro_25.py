@@ -753,6 +753,7 @@ def probe_stehe_links(probe_pos_1=0,probe_pos_2=1):
         print(f"{heading=} {heading_turn=}")
 
     wall()
+    robot.reset()
 
     robot.settings(150,150,100,100)
     if probe_pos_1 ==0 and probe_pos_2 == 1:
@@ -844,9 +845,10 @@ def bringe_proben_ins_labor(labor="links",probe_pos_1=0,probe_pos_2=1):
         turn(-90)
 
     robot.settings(300)
+    go(150)
     fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rb"],max_gefahrene_distanz=600, log_level=3)
     go(40)
-    folge_linie(stoppe_bei_farbmuster=farb_parameter["br"],max_v=200, max_gefahrene_distanz=300,algo_bis_distanz=200) 
+    folge_linie(stoppe_bei_farbmuster=farb_parameter["br"],max_v=200, max_gefahrene_distanz=220, algo_bis_distanz=150) 
     heber2.run_until_stalled(-200) 
     go(70)  
     robot.settings(300,300,100,100)
@@ -863,13 +865,10 @@ def gehe_vom_labor_zurueck_zur_linie(labor="links"):
         go(100)
         turn(90) 
     if labor=='links':
-        robot.drive(200,40)
-        wait(200)
-        robot.drive(200,-40)
-        wait(200)
-        robot.drive(500,0)
-        wait(1100)
-        robot.stop()
+        turn(20)
+        go(50)
+        turn(-20)
+        go(300) 
        
 
     fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rw"],  max_gefahrene_distanz=500, log_level=1)
@@ -878,11 +877,10 @@ def gehe_vom_labor_zurueck_zur_linie(labor="links"):
  
 
 if __name__ == "__main__":
+   
     main_watch=StopWatch()
     start_ts=main_watch.time() 
-    start_punkt="proben"  
-    gehe_vom_labor_zurueck_zur_linie("links")
- 
+    start_punkt="rover"   
     if start_punkt=='start':
         wasser_holen(log_level=1) 
         log(f"vergangene Zeit: { main_watch.time()-start_ts}", log_level=3) 
@@ -899,22 +897,24 @@ if __name__ == "__main__":
         rover() 
         log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
 
-        # gehe vom Rover zur den Proben
-        go(200)
-        turn(-180)
-        wall()
-        go(50)
-        turn(-90) 
-        go(300)
-        fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3) 
-        robot.settings(200,200,100,100)
-        go(180)
-        turn(90)
-        wall(100) 
+    # gehe vom Rover zur den Proben
+   
+    go(200)
+    turn(-180)
+    wall()
+    go(50)
+    turn(-90) 
+    go(300)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3) 
+    robot.settings(200,200,100,100)
+    go(180)
+    turn(90)
+    wall(100) 
+   
 
     probe_pos_1=1
     probe_pos_2=2
-    labor='links' 
+    labor='rechts' 
     # nach dieser Funktion steht der R bei 0 Grad vor der Probe
     probe_stehe_links(probe_pos_1,probe_pos_2)  
     bringe_proben_ins_labor(labor,probe_pos_1,probe_pos_2)
@@ -922,9 +922,10 @@ if __name__ == "__main__":
 
     probe_pos_1=4
     probe_pos_2=5
-    labor='rechts' 
+    labor='links' 
     # nach dieser Funktion steht der R bei 0 Grad vor der Probe
-    probe_stehe_links(probe_pos_1,probe_pos_2)  
+  
+    probe_stehe_links(probe_pos_1,probe_pos_2) 
     bringe_proben_ins_labor(labor,probe_pos_1,probe_pos_2)
     gehe_vom_labor_zurueck_zur_linie(labor) 
     log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
