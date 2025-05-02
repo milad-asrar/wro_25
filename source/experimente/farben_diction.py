@@ -192,67 +192,102 @@ farb_list_nygwrn = [
 ]
 
 # %%
-farben_gesehen:list=[]
-old_color =-2
-gesehene_farben:list=[]
-pos = 0*4
-farbe_start=0
-farbe_end = 0
-farb_list=farb_list_gynwnr
-#farb_list=farb_list_nygwrn
-for i in range(len(farb_list)): 
-    d=farb_list[i]
-    distance= list(d.keys())[0]
-    aktuelle_farbe = list(d.values())[0]
-    if old_color != aktuelle_farbe:
-        farbe_end=distance
-        farbe_gesehen_distanz = farbe_end-farbe_start
-        print(f"{old_color}, {farbe_start}, {farbe_end} {farbe_gesehen_distanz=}")
-       
-        if farbe_gesehen_distanz>20 and old_color!=-2:
-            farben_gesehen.append([old_color,farbe_start,farbe_end,farbe_gesehen_distanz])
-        old_color=aktuelle_farbe
-        farbe_start=distance
 
-print(f"{old_color}, {farbe_start}, {farbe_end} {farbe_gesehen_distanz=}") 
+def finde_farbe_auf_pos(farb_list):
+    old_color =-2
+    farben_gesehen:list=[]
+    gesehene_farben:list=[]
+    pos = 0*4
+    farbe_start=0
+    farbe_end = 0
+    #farb_list=farb_list_gynwnr
 
-print(farben_gesehen)
-# %%
-for i in range(len(farben_gesehen)):
-    min, max = farben_gesehen[i][1:3] 
-    if i ==0:
-        mitte_erste_farbe = min + farben_gesehen[i][3] /2
-        min_scan_bereich =mitte_erste_farbe-10
-        max_scan_bereich =mitte_erste_farbe+10
-        print(farben_gesehen[i][0])
-    min_scan_bereich = min_scan_bereich + 100*i 
-    max_scan_bereich = max_scan_bereich + 100*i 
-    print(f"{min_scan_bereich=}, {max_scan_bereich} ")
+    for i in range(len(farb_list)): 
+        d=farb_list[i]
+        distance= list(d.keys())[0]
+        aktuelle_farbe = list(d.values())[0]
+        if old_color != aktuelle_farbe:
+            farbe_end=distance
+            farbe_gesehen_distanz = farbe_end-farbe_start
+            print(f"{old_color}, {farbe_start}, {farbe_end} {farbe_gesehen_distanz=}")
+        
+            if farbe_gesehen_distanz>20 and old_color!=-2:
+                farben_gesehen.append([old_color,farbe_start,farbe_end,farbe_gesehen_distanz])
+            old_color=aktuelle_farbe
+            farbe_start=distance
+
+    mitte_erste_farbe = farben_gesehen[0][1] + farben_gesehen[0][3] /2
+    min_scan_bereich =int(mitte_erste_farbe-25)
+    max_scan_bereich =min_scan_bereich +20
+
+    i=0
+    alte_farbe = ''
+    farbe_auf_pos:list=[]
+
+    for d in farb_list: 
+        distance= list(d.keys())[0]
+        aktuelle_farbe = list(d.values())[0]      
+
     
-      
-        
-        if min>= min_scan_bereich and max <=max_scan_bereich:
-            print(farben_gesehen[i][0])
-            
-        
-            print(farben_gesehen[i][0])
-        
-        
-print(mitte_erste_farbe)
+
+        if distance>= min_scan_bereich and distance <=max_scan_bereich:
+            #print(f"\t{d}, {min_scan_bereich=}, {max_scan_bereich}  {aktuelle_farbe=}")  
+            gesehene_farben.append(aktuelle_farbe)
+    
+
+        if distance >max_scan_bereich and alte_farbe !=aktuelle_farbe:
+            print(f"\t{i=} {d}, {min_scan_bereich=}, {max_scan_bereich} {alte_farbe=} {aktuelle_farbe=}")
+            i=i+1
+            alte_farbe = aktuelle_farbe
+            min_scan_bereich = int(min_scan_bereich + 100)
+            max_scan_bereich = min_scan_bereich+20
+            farbe_dict={"g":0, "r":0, "w":0,"y":0, "n":0} 
+            farbe_dict["g"]=gesehene_farben.count(Color.GREEN)
+            farbe_dict["r"]=gesehene_farben.count(Color.RED)
+            farbe_dict["w"]=gesehene_farben.count(Color.WHITE)
+            farbe_dict["y"]=gesehene_farben.count(Color.YELLOW)
+            farbe_dict["n"]=gesehene_farben.count(Color.NONE)
+            farbe_dict_sortiert = sorted(farbe_dict, key=farbe_dict.get, reverse=True) 
+            # wenn irgend eine Farbe außer None gefunden wurde, nimm diese
+            if farbe_dict_sortiert[0]  == 'n' and (farbe_dict["g"] >0 or farbe_dict["r"]>0 or farbe_dict["y"]>0 or farbe_dict["w"]>0):
+                farbe_auf_pos.append(farbe_dict_sortiert[1] )
+            else:
+                farbe_auf_pos.append(farbe_dict_sortiert[0] )
+            print(f"{farbe_auf_pos=}")
+            gesehene_farben=[]
+
+    # letzte Pos auslesen       
+    farbe_dict={"g":0, "r":0, "w":0,"y":0, "n":0} 
+    farbe_dict["g"]=gesehene_farben.count(Color.GREEN)
+    farbe_dict["r"]=gesehene_farben.count(Color.RED)
+    farbe_dict["w"]=gesehene_farben.count(Color.WHITE)
+    farbe_dict["y"]=gesehene_farben.count(Color.YELLOW)
+    farbe_dict["n"]=gesehene_farben.count(Color.NONE)
+    farbe_dict_sortiert = sorted(farbe_dict, key=farbe_dict.get, reverse=True) 
+    # wenn irgend eine Farbe außer None gefunden wurde, nimm diese
+    if farbe_dict_sortiert[0]  == 'n' and (farbe_dict["g"] >0 or farbe_dict["r"]>0 or farbe_dict["y"]>0 or farbe_dict["w"]>0):
+        farbe_auf_pos.append(farbe_dict_sortiert[1] )
+    else:
+        farbe_auf_pos.append(farbe_dict_sortiert[0] )
+
+    return farbe_auf_pos
+
+
+farben_auf_pos = finde_farbe_auf_pos(farb_list_nygwrn)
+print(farben_auf_pos)
+
+   
+#%%
 
 # %%
 
 # print(aktuelle_farbe,distance)
 
-print(gesehene_farben.count(Color.WHITE))
-print(gesehene_farben.count(Color.GREEN))
-print(gesehene_farben.count(Color.YELLOW))
-print(gesehene_farben.count(Color.RED))
-print(gesehene_farben.count(Color.NONE))
+ 
 # %%
 
 # eine Liste: wie oft wurde die Farbe gesehen
-farbe_dict_sortiert = sorted(farb_list, key=farb_list.get, reverse=True) 
+farbe_dict_sortiert = sorted(gesehene_farben, key=gesehene_farben.get, reverse=True) 
 aktuelle_farbe = farbe_dict_sortiert[0]  
 
 farb_list.count({"Color.WHITE":3})
