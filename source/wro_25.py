@@ -143,9 +143,10 @@ def folge_linie(stoppe_bei_farbmuster=[Color.BLACK,Color.RED],              \
     last_error = 0
     Kp, Ki, Kd = 0.65, 0.0002, 1.0
 
-    slow_v= max_v *0.75
+    slow_v= int(max_v *0.75) if max_v > 100 else 50
     drive_speed=max_v
     v,v_agg,t,t_agg = robot.settings()
+    print(slow_v)
     robot.settings(slow_v,slow_v,100,500)
   
     while True:
@@ -366,24 +367,7 @@ def test_proben_farben():
 
 
 #: PROBEN
-def proben_holen(probe_1_pos=0, probe_2_pos=1):
-    # proben holen
-    heber2_reset()
-    farb_muster="br"
-    folge_linie(stoppe_bei_farbmuster=farb_parameter[farb_muster],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
-    v, v_acc, t, t_acc =200,200,40,40
-    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
-    go(probe_1_pos*100)
-    turn(25) 
-    go(50) 
-    turn(-25)
-    go(50)
-    go((probe_2_pos-probe_1_pos-1)*100)
-    turn (-40)
-    go(50) 
-    heber2.run_angle(200,130)
-    turn(40)
-    # steht am ende der letzten abgeholten Probe
+ 
     
 def wall(distanz=200): 
     go(distanz*-1,then=Stop.BRAKE)
@@ -391,81 +375,8 @@ def wall(distanz=200):
     robot.reset()
     robot.use_gyro(True)
 
-
-def proben_liefern_rechts():
-    v, v_acc, t, t_acc =400,400,100,100
-    robot.settings(int(v),int(v_acc), int(t),int(t_acc))  
-    turn(-90)
-    go(400,then=Stop.COAST_SMART)
-    turn(-90)
-    wall(600)
-    go(210)
-    turn(90)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rb"],  max_gefahrene_distanz=200, log_level=1)
-    go(40)
-    folge_linie(stoppe_bei_farbmuster=farb_parameter["br"],max_v=500, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100,log_level=3) 
-    go(70)
-    heber2_reset()
-    go(-200)
-    go(0,then=Stop)
-  
-def zuruck_links():
-    go(-300)
-    turn(-90)
-    wall()
-    go(50)
-    turn(90)
-    folge_linie(stoppe_bei_farbmuster=farb_parameter["rw"],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
-    go(60)
-    turn(-90)
-
-
-def zuruck_rechts():
-    go(-400)
-    turn(90)
-    wall(1000)
-    go(100)
-    turn(90)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rw"],  max_gefahrene_distanz=500, log_level=1)
-    go(90)
-    turn(-90)
-    wall()
-
-def probe_links_liefern(probe_pos): 
-    v, v_acc, t, t_acc =200,200,100,100
-    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
-    wall_distanz = 300 +(100*probe_pos)
-    wall(wall_distanz)
-    go(180)
-    turn(-90)
-    v, v_acc, t, t_acc =500,500,100,100
-    robot.settings(int(v),int(v_acc), int(t),int(t_acc))    
-
-    go(500)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rb"],  max_gefahrene_distanz=500, log_level=1)
-    go(40)
-    folge_linie(stoppe_bei_farbmuster=farb_parameter["br"],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
-    go(70)
-    heber2_reset()
-    go(-200)
-    go(0,then=Stop.COAST_SMART)
-
  
-#
-# proben_holen(2,4)
-# probe_links_liefern(4)
-#zuruck_links()
-# proben_liefern_rechts()
-# zuruck_rechts()
 
-# zuruck_links()
-# proben_liefern_rechts()
-#proben_holen_rechts(0,1)
-#wall(200)
- 
-# interactive()
-
-  
 
 def fahre_zum_wasserturm():
     #steht am Start
@@ -533,15 +444,8 @@ def drohne():
     go(-1150,then=Stop.COAST_SMART)
     heber.run_until_stalled(-400)
     go(50,then=Stop.COAST_SMART)
-    
-    
-    
-  
-
-
-
-
-
+     
+     
 #: #############################################################################
  
 
@@ -565,6 +469,13 @@ def proben_aufstellung_lesen(log_level=3):
 
     log(f"proben_aufstellung_lesen(: {proben_pos} {len(proben_pos)}\n",log_level)
 
+
+def drive_distanz(turn_rate,distanz,speed=100):
+    start_distanz = robot.distance()
+    while  robot.distance()-start_distanz <=distanz:
+        robot.drive(speed,  turn_rate)
+        wait(10)
+    robot.stop()
 
     
 def interactive():
@@ -646,7 +557,8 @@ def interactive():
         if cmd in ['farb_combi','fb']: 
 
             if ',' in parameter:
-                farb_muster,max_distanz = parameter.split(",")
+                farb_muster,max_distan    # # probe_pos_1=1
+
                 max_distanz=int(max_distanz)
             else:
                 farb_muster=parameter
@@ -663,18 +575,16 @@ def interactive():
 
 
         if cmd=="drive":
+            speed=100
             try:
-                speed,turn_rate = parameter.split(",")
+                turn_rate,distanz = parameter.split(",")
+                distanz=int(distanz)
+                turn_rate=int(turn_rate)
             except:
-                speed, turn_rate = 30,60
-            aktuelle_farbe=get_farbe_am_boden()
-            while  aktuelle_farbe not in [Color.BLACK,Color.WHITE]:
-                robot.drive(int(speed),  int(turn_rate))
-                wait(10)
-                aktuelle_farbe=get_farbe_am_boden()
-            robot.stop()
-            go(100)
-            turn(-1* hub.imu.heading())
+                turn_rate,distanz = 0,60
+            drive_distanz(turn_rate,distanz) 
+            
+ 
            
         if cmd in ['heber1_reset',"h1_reset"]:
             reset_heber()
@@ -756,6 +666,16 @@ def interactive():
         if cmd=='p':
             test_proben_farben()
 
+        if cmd =='pl':
+            try:
+                pos_1, pos_2 = parameter.split(",")
+            except:
+                pos_1=0
+                pos_2=1
+            probe_stehe_links(int(pos_1),int(pos_2)) 
+            go(0,then=Stop.COAST_SMART)
+            get_status()
+
         if cmd=="proben_1":
             farb_muster="br"
             folge_linie(stoppe_bei_farbmuster=farb_parameter[farb_muster],max_v=50, max_gefahrene_distanz=300,end_ausrichtung=90,algo_bis_distanz=100) 
@@ -777,20 +697,20 @@ def interactive():
     log(f"{aktuelle_farbe=}, {hsv=}, {reflection=} ",log_level=log_level)
 #:
 
+
 def proben_lesen(log_level=3):
     """
         steht vor dem Wasserlager auf der w. Linie
     """ 
-    v, v_acc, t, t_acc =300,300,100,100
-    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
+ 
+    robot.settings(300,300,100,100)
     turn(-90)
     wall(200)
     go(50)
     turn(-90) 
     go(300)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3)
-    v, v_acc, t, t_acc =200,200,100,100
-    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3) 
+    robot.settings(200,200,100,100)
     go(180)
     turn(90)
     wall(100)
@@ -816,43 +736,61 @@ def rover():
     go(200)
     turn(-50)
     heber.run_angle(200,170)
+    heber2.run_angle(200,140)
     turn(45,then=Stop.COAST_SMART)
-
+    heber.run_until_stalled(-400,duty_limit=50)
+    heber2.run_until_stalled(-400,duty_limit=50)
 
 def probe_stehe_links(probe_pos_1=0,probe_pos_2=1):
-    robot.settings(int(100),int(100), int(100),int(100))
+    robot.settings(300,300,100,100)
+    heber2.run_until_stalled(-300,duty_limit=50)
+
+    def ausrichten():
+        heading =hub.imu.heading()
+        heading_turn = abs(heading) * (1 if heading <0 else -1 )
+        heber2.run_until_stalled(200,duty_limit=50)
+        turn(heading_turn)
+        print(f"{heading=} {heading_turn=}")
 
     wall()
+
+    robot.settings(150,150,100,100)
     if probe_pos_1 ==0 and probe_pos_2 == 1:
         go(85)
-        robot.arc(155,65)#1-2
+        robot.arc(155,65)  
+
     if probe_pos_1 ==0 and probe_pos_2 == 2:
-        go(85)
-        robot.arc(155,65)#1-2
-        robot.arc(-85,90)
+        go(85) 
+        robot.arc(155,65) 
+        robot.arc(-85,90) 
+
     if probe_pos_1 ==0 and probe_pos_2 == 3:
         go(85)
-        robot.arc(155,65)#1-2
-        robot.arc(-165,80)
+        robot.arc(155,65)
+        robot.arc(-165,80) 
+
     if probe_pos_1 ==1 and probe_pos_2 == 2:
         go(170)
         robot.arc(155,65)
     if probe_pos_1 ==1 and probe_pos_2 == 3:
         go(170)
-        robot.arc(155,65)#1-2
+        robot.arc(155,65) 
         robot.arc(-85,90)
     if probe_pos_1 ==2 and probe_pos_2 == 3:
         go(260)
-        robot.arc(155,65)#1-2
+        robot.arc(155,65)
     if probe_pos_1 ==3 and probe_pos_2 == 4:
         go(360)
-        robot.arc(155,65)#1-2
+        robot.arc(155,65) 
     if probe_pos_1 ==4 and probe_pos_2 == 5:
         go(460)
-        robot.arc(155,65)#1-2
+        robot.arc(155,65)
+
+    # FEHLEN: 2,4; 3,5
+    ausrichten()
     
 def probe_stehe_rechts(probe_pos_1=0,probe_pos_2=1):
-    robot.settings(int(100),int(100), int(100),int(100))
+    robot.settings(100,100,100,100)
 
     wall()
     if probe_pos_1 ==0 and probe_pos_2 == 1:
@@ -885,68 +823,108 @@ def probe_stehe_rechts(probe_pos_1=0,probe_pos_2=1):
     if probe_pos_1 ==3 and probe_pos_2 == 5:
         go(340)
         robot.arc(-155,65)#1-2
-        robot.arc(95,90)
+        robot.arc(95,90) 
 
+def bringe_proben_ins_labor(labor="links",probe_pos_1=0,probe_pos_2=1):
+    robot.settings(200,200,200,200)
+    
+    log(f"{labor}, {probe_pos_1}, {probe_pos_2}",log_level=3)
+    if labor=='rechts':
+        go(-100)
+        turn(-45)
+        go(400)
+        turn(-135)
+        wall_distanz = 700-(probe_pos_2-1)*100
+        wall(wall_distanz)
+        go(200)
+        turn(90)
+    else:
+        wall((probe_pos_2+1)*100+100)
+        go(110)
+        turn(-90)
 
+    robot.settings(300)
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rb"],max_gefahrene_distanz=600, log_level=3)
+    go(40)
+    folge_linie(stoppe_bei_farbmuster=farb_parameter["br"],max_v=200, max_gefahrene_distanz=300,algo_bis_distanz=200) 
+    heber2.run_until_stalled(-200) 
+    go(70)  
+    robot.settings(300,300,100,100)
+    go(-200) 
+    turn(180)
+    # Proben sind abgeliefert
+    
+def gehe_vom_labor_zurueck_zur_linie(labor="links"):
+    if labor=='rechts':
+        go(400)
+        turn(-90)    
+    if labor=='rechts':
+        wall(950)
+        go(100)
+        turn(90) 
+    if labor=='links':
+        robot.drive(200,40)
+        wait(200)
+        robot.drive(200,-40)
+        wait(200)
+        robot.drive(500,0)
+        wait(1100)
+        robot.stop()
+       
 
-
-
-
-
+    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["rw"],  max_gefahrene_distanz=500, log_level=1)
+    turn(-90)
+    wall()
+ 
 
 if __name__ == "__main__":
     main_watch=StopWatch()
-    start_ts=main_watch.time()   
-    heber2.run_until_stalled(-800, duty_limit=50) 
-    probe_stehe_links(3,4) 
-    heber2.run_angle(200,140)
-    v, v_acc, t, t_acc =300,300,100,100
-    robot.settings(int(v),int(v_acc), int(t),int(t_acc))
-    go(100*-3+10)
-    heading_korrektur = 90 - hub.imu.heading()
-    turn(heading_korrektur)
-    go(-800)
-    turn(-90)
-    wall(200)
-    go(160)
-    turn(-90)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["br"],max_gefahrene_distanz=500, log_level=3)
-    go(70)
-    heber2.run_until_stalled(-400,duty_limit=50)
-    go(-200)
+    start_ts=main_watch.time() 
+    start_punkt="proben"  
+    gehe_vom_labor_zurueck_zur_linie("links")
+ 
+    if start_punkt=='start':
+        wasser_holen(log_level=1) 
+        log(f"vergangene Zeit: { main_watch.time()-start_ts}", log_level=3) 
+        proben_lesen(log_level=3)
+        log(f"vergangene Zeit: { main_watch.time()-start_ts}", log_level=3) 
     
-
-    interactive()
-
-   
-    # # # wasser_holen(log_level=1) 
-    # # # #log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
-    # # # proben_lesen(log_level=3)
-    # # # #log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3)
-   
-    # # # log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
-    # # # heber2.run_until_stalled(-800, duty_limit=50) 
-    # # # heber.run_until_stalled(-800, duty_limit=50) 
-    # # # robot.settings(500,500,200,200)
-    # # # drohne()
-    # # # rover()
-    # # # log(f"vergangene Zeit: { main_watch.time(
-    # # # log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
-    # # # heber2.run_until_stalled(-800, duty_limit=50) 
-    # # # heber.run_until_stalled(-800, duty_limit=50) 
-    # # # robot.settings(500,500)-start_ts}",log_level=3) 
-
-    # # # # ver()
-    # # # # probe() 
-     
-
-    # # # interactive()
-
-    # # # log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
-
+        heber2.run_until_stalled(-800, duty_limit=50) 
+        heber.run_until_stalled(-800, duty_limit=50) 
+        robot.settings(500,500,200,200)
+        drohne()
+        heber2.run_until_stalled(-800, duty_limit=50) 
+        heber.run_until_stalled(-800, duty_limit=50) 
     
+        rover() 
+        log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
 
-   
+        # gehe vom Rover zur den Proben
+        go(200)
+        turn(-180)
+        wall()
+        go(50)
+        turn(-90) 
+        go(300)
+        fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3) 
+        robot.settings(200,200,100,100)
+        go(180)
+        turn(90)
+        wall(100) 
 
+    probe_pos_1=1
+    probe_pos_2=2
+    labor='links' 
+    # nach dieser Funktion steht der R bei 0 Grad vor der Probe
+    probe_stehe_links(probe_pos_1,probe_pos_2)  
+    bringe_proben_ins_labor(labor,probe_pos_1,probe_pos_2)
+    gehe_vom_labor_zurueck_zur_linie(labor)
 
-
+    probe_pos_1=4
+    probe_pos_2=5
+    labor='rechts' 
+    # nach dieser Funktion steht der R bei 0 Grad vor der Probe
+    probe_stehe_links(probe_pos_1,probe_pos_2)  
+    bringe_proben_ins_labor(labor,probe_pos_1,probe_pos_2)
+    gehe_vom_labor_zurueck_zur_linie(labor) 
+    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
