@@ -865,9 +865,9 @@ def gehe_vom_labor_zurueck_zur_linie(labor="links"):
         go(100)
         turn(90) 
     if labor=='links':
-        turn(20)
-        go(50)
-        turn(-20)
+        turn(15)
+        go(40)
+        turn(-15)
         go(300) 
        
 
@@ -880,7 +880,7 @@ if __name__ == "__main__":
    
     main_watch=StopWatch()
     start_ts=main_watch.time() 
-    start_punkt="rover"   
+    start_punkt="proben"   
     if start_punkt=='start':
         wasser_holen(log_level=1) 
         log(f"vergangene Zeit: { main_watch.time()-start_ts}", log_level=3) 
@@ -899,30 +899,31 @@ if __name__ == "__main__":
 
     # gehe vom Rover zur den Proben
    
-    go(200)
-    turn(-180)
-    wall()
-    go(50)
-    turn(-90) 
-    go(300)
-    fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3) 
-    robot.settings(200,200,100,100)
-    go(180)
-    turn(90)
-    wall(100) 
+        go(200)
+        turn(-180)
+        wall()
+        go(50)
+        turn(-90) 
+        go(300)
+        fahre_bis_zur_farbkombi(stoppe_bei_farbmuster=farb_parameter["wr"],max_gefahrene_distanz=500, log_level=3) 
+        robot.settings(200,200,100,100)
+        go(180)
+        turn(90)
+        wall(100) 
    
 
     probe_pos_1=1
     probe_pos_2=2
-    labor='rechts' 
+    labor='links' 
     # nach dieser Funktion steht der R bei 0 Grad vor der Probe
     probe_stehe_links(probe_pos_1,probe_pos_2)  
     bringe_proben_ins_labor(labor,probe_pos_1,probe_pos_2)
     gehe_vom_labor_zurueck_zur_linie(labor)
+    log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
 
     probe_pos_1=4
     probe_pos_2=5
-    labor='links' 
+    labor='rechts' 
     # nach dieser Funktion steht der R bei 0 Grad vor der Probe
   
     probe_stehe_links(probe_pos_1,probe_pos_2) 
