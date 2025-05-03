@@ -337,18 +337,19 @@ def side_farbe(log_level=1):
     
     log(f"{reflection=}, {berechnete_farbe=}, {hsv=}",log_level=log_level)
     return berechnete_farbe,reflection
-
+################################################################################
 ## TESTS
+################################################################################
 def test_boden_farben():
     robot.reset()
     robot.distance()
     gesehene_farben:dict={}
     while robot.distance() < 180:
-        aktuelle_farbe = get_farbe_am_boden(log_level=1)  
+        aktuelle_farbe = get_farbe_am_boden(log_level=3)  
         gesehene_farben[aktuelle_farbe] = gesehene_farben.get(aktuelle_farbe,0)+1
         robot.drive(100, 0) 
         wait(15)
-    print (f"{gesehene_farben=}, erwartet ca ''")
+    print (f"{gesehene_farben=}, erwartet ca 'Color.RED: 70, Color.WHITE: 35, Color.BLACK: 12'")
     robot.stop()
 
 def test_proben_farben():
@@ -755,13 +756,8 @@ def rover():
     turn(45,then=Stop.COAST_SMART)
     print("Rover Ende")
  
-
-if __name__ == "__main__":
-   
-    main_watch=StopWatch()
-    start_ts=main_watch.time() 
-   
-    #interactive() 
+#: HAUPTPROGRAMM für den ersten Teil
+def wro_25():
     wasser_holen(log_level=1) 
     log(f"vergangene Zeit: { main_watch.time()-start_ts}", log_level=3) 
     heber2.run_until_stalled(-800, duty_limit=50) 
@@ -796,3 +792,14 @@ if __name__ == "__main__":
     go(-900) 
 
     log(f"vergangene Zeit: { main_watch.time()-start_ts}",log_level=3) 
+
+if __name__ == "__main__":
+   
+    main_watch=StopWatch()
+    start_ts=main_watch.time() 
+
+    #test_boden_farben()
+    #test_proben_farben()
+    wro_25() 
+    #interactive() 
+   
